@@ -1,0 +1,13 @@
+step 1)	create a txt file,add in some content
+
+
+step 2) we need to initialize the folder to store in snapshots
+		==>git init
+step 3) in the same txt file,update it with new content
+step 4) in the same txt file,update it with new content
+step 5) ==>git add .
+steo 6)	==>check the status of current git folder
+		==>git status
+step 7) if it is red then it is not commited
+step 8) commit it 
+		==>git commit
