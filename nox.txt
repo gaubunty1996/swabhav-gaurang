@@ -8,6 +8,8 @@ step 4) in the same txt file,update it with new content
 step 5) ==>git add .
 steo 6)	==>check the status of current git folder
 		==>git status
-step 7) if it is red then it is not commited
+step 7) now commit it
 step 8) commit it 
 		==>git commit
+step 9) git remote add origin(petname) url
+step 10) git push newfile master
