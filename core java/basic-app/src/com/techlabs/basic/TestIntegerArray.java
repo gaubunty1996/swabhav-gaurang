@@ -6,6 +6,7 @@ public class TestIntegerArray {
 	
 	public static void NumberToZero(int n) {
 		n=0;
+		System.out.print(n);
 	}
 	
 	public static void AllNumbersTZero(int[] ns) {
@@ -17,6 +18,7 @@ public class TestIntegerArray {
 	public static void main(String[] args) {
 		
 		int num = 10;
+		
 		
 		int[] nos= {10,20,30,40};
 		
