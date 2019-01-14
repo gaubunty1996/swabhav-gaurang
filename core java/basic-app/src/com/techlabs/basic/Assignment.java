@@ -3,11 +3,10 @@ package com.techlabs.basic;
 import java.util.*;
 import java.net.*;
 import java.util.Arrays;
-import java.net.*;
-import java.util.*;
+
 
 /*
-  Expected input="https://www.google.com ? developer=Kamala & client=Aurionpro"
+  Expected input="https://www.google.com?developer=Kamala&client=Aurionpro"
   Expected output:	domain=google
 					developer=kamala
 					client=Aurionpro
@@ -24,44 +23,42 @@ public static void main(String[] args) throws Exception {
 		//String url = "http://www.swabhavtechlabs.com?";   Testcase=3
 		//String url = "http://www.swabhavtechlabs.com?developer=abc";    Testcase=4
 		
-		String[] urlsplittedbyquestionmark = url.split("\\?");
+		String[] urlSplittedByQuestionMark = url.split("\\?");
 		
-		String Domain="";
-		String Developer="Null";
-		String Client="Null";
+		String domain="";
+		String developer="Null";
+		String client="Null";
 		
 		URL d=new URL(url);
-		Domain=d.getHost();
+		domain=d.getHost();
 		
-		String[] DomainName = Domain.split("\\.");
+		String[] domainName = domain.split("\\.");
 		
 		
-		System.out.println("Domain is: "+DomainName[1]);
+		System.out.println("Domain is: "+domainName[1]);
 		
-		//System.out.print("url spliited by ? mark is:  ");
-		//System.out.println(Arrays.toString(urlsplittedbyquestionmark));
 		
-		if (urlsplittedbyquestionmark.length>1){
-		String[] urlspliitedsecondtime = urlsplittedbyquestionmark[1].split("&");
+		if (urlSplittedByQuestionMark.length>1){
+			
+		String[] urlSplittedSecondTime = urlSplittedByQuestionMark[1].split("&");
 		
-		//System.out.print("url spliited by & is:  ");
-		//System.out.println(Arrays.toString(urlspliitedsecondtime));
 		
-		for (int i=0;i<urlspliitedsecondtime.length;i++){
-		    if (urlspliitedsecondtime[i].startsWith("developer")){
-		        Developer = urlspliitedsecondtime[i].substring(10);
+		
+		for (int i=0;i<urlSplittedSecondTime.length;i++){
+		    if (urlSplittedSecondTime[i].startsWith("developer")){
+		        developer = urlSplittedSecondTime[i].substring(10);
 		        
 		    }
-		    else if (urlspliitedsecondtime[i].startsWith("client")){
-		        Client = urlspliitedsecondtime[i].substring(7);
+		    else if (urlSplittedSecondTime[i].startsWith("client")){
+		        client = urlSplittedSecondTime[i].substring(7);
 		        
 		    }
 		    
 		}
 		}
 		
-		System.out.println("Developer name is: "+Developer);
-		System.out.println("Client name is: "+Client);
+		System.out.println("Developer name is: "+developer);
+		System.out.println("Client name is: "+client);
 	}
 
 }
