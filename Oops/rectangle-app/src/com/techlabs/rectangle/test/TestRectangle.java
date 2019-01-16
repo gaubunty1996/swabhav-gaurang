@@ -16,8 +16,8 @@ public class TestRectangle {
 
 		System.out.println("Current value of width is : " + rectangle.getWidth());
 		System.out.println("Current value of Length is : " + rectangle.getLength());
-
 		System.out.println("Area of Rectangle :  " + rectangle.calculateArea());
+		System.out.println("Area of Rectangle :  " + new Rectangle().calculateArea());
 	}
 
 }
