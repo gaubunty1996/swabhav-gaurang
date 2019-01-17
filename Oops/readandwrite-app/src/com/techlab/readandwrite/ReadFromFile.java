@@ -3,7 +3,7 @@ package com.techlab.readandwrite;
 import java.io.*;
 import java.util.*;
 
-public class readFromFile {
+public class ReadFromFile {
 
 	public static void main(String[] args) throws IOException {
 		File file = new File("C:\\Users\\gaurang\\Desktop\\img.txt");
