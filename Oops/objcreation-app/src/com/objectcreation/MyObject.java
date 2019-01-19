@@ -1,6 +1,6 @@
 package com.objectcreation;
 
-public class MyObject {
+public class MyObject implements Cloneable {
 	public String name;
 	
 	public MyObject(String name) {
