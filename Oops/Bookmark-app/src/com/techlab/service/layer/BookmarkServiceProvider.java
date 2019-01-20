@@ -46,5 +46,6 @@ public class BookmarkServiceProvider {
 		}
 		writer.close();
 		br.close();
+		System.out.println("The exported new file is stored in :"+customFinalPath);
 	}
 }
