@@ -18,7 +18,6 @@ public class BookmarkLauncher {
 		System.out.println("If you want to keep surfing, press s: ");
 
 		String input = sc.next();
-		input = input.toLowerCase();
 
 		if (input.equalsIgnoreCase("a")) {
 			System.out.println("Enter the website's name:");
