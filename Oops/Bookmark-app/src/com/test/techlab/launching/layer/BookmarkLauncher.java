@@ -14,6 +14,7 @@ public class BookmarkLauncher {
 
 		System.out.println("If you want to add bookmark, press a: ");
 		System.out.println("If you want to view bookmark, press v: ");
+		System.out.println("If you want to export bookmark, press e: ");
 		String input = sc.next();
 
 		if (input.equalsIgnoreCase("a")) {
@@ -27,6 +28,11 @@ public class BookmarkLauncher {
 		if (input.equalsIgnoreCase("v")) {
 			bsp.displayBookmark();
 		}
+		if (input.equalsIgnoreCase("e")) {
+			String defaultDirectory = getCustomFilePath();
+			String customFileName = getCustomFileName();
+			bsp.exportBookmarks(defaultDirectory, customFileName);
+		}
 	}
 
 	public static String getWebsiteName() {
@@ -39,5 +45,17 @@ public class BookmarkLauncher {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter the url : ");
 		return sc.next();
+	}
+
+	public static String getCustomFilePath() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter default file directory to save: ");
+		return sc.nextLine();
+	}
+
+	public static String getCustomFileName() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter file name: ");
+		return sc.nextLine();
 	}
 }
