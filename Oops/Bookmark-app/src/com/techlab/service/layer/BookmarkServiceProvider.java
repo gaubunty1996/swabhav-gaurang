@@ -19,7 +19,8 @@ public class BookmarkServiceProvider {
 		writer.append("<br>");
 		writer.close();
 	}
-	public void DisplayBookmark() throws IOException {
+
+	public void displayBookmark() throws IOException {
 		String fileName = "C:\\Users\\gaurang\\Desktop\\bookmark.html";
 		File file = new File(fileName);
 		BufferedReader br = new BufferedReader(new FileReader(file));
