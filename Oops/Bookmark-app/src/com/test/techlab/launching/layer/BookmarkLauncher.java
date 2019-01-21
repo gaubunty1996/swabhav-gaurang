@@ -11,27 +11,42 @@ public class BookmarkLauncher {
 		Scanner sc = new Scanner(System.in);
 		Bookmark bookmark = new Bookmark();
 		BookmarkServiceProvider bsp = new BookmarkServiceProvider();
+		boolean wantToExit = true;
+		while (wantToExit) {
 
-		System.out.println("If you want to add bookmark, press a: ");
-		System.out.println("If you want to view bookmark, press v: ");
-		System.out.println("If you want to export bookmark, press e: ");
-		String input = sc.next();
+			System.out.println("If you want to add bookmark, press a: ");
+			System.out.println("If you want to view bookmark, press v: ");
+			System.out.println("If you want to export bookmark, press e: ");
+			System.out.println("If you want to exit, press x: ");
+			String input = sc.next();
+			input = input.toLowerCase();
+			
+			switch (input) {
+			
+			case ("a"):
+				String name = getWebsiteName();
+				String url = getUrlName();
+				bookmark.callToAdd(name, url);
+				System.out.println("website's name is : " + bookmark.getNameOfWebsite());
+				System.out.println("url is : " + bookmark.getUrlOfWebsite());
+				bsp.addBookmark(bookmark.getNameOfWebsite(), bookmark.getUrlOfWebsite());
+				break;
+			
+			case ("v"):
+				bsp.displayBookmark();
+				break;
+			
+			case ("e"):
+				String defaultDirectory = getCustomFilePath();
+				String customFileName = getCustomFileName();
+				bsp.exportBookmarks(defaultDirectory, customFileName);
+				break;
+			
+			case ("x"):
+				wantToExit = false;
+				break;
+			}
 
-		if (input.equalsIgnoreCase("a")) {
-			String name = getWebsiteName();
-			String url = getUrlName();
-			bookmark.callToAdd(name, url);
-			System.out.println("website's name is : " + bookmark.getNameOfWebsite());
-			System.out.println("url is : " + bookmark.getUrlOfWebsite());
-			bsp.addBookmark(bookmark.getNameOfWebsite(), bookmark.getUrlOfWebsite());
-		}
-		if (input.equalsIgnoreCase("v")) {
-			bsp.displayBookmark();
-		}
-		if (input.equalsIgnoreCase("e")) {
-			String defaultDirectory = getCustomFilePath();
-			String customFileName = getCustomFileName();
-			bsp.exportBookmarks(defaultDirectory, customFileName);
 		}
 	}
 

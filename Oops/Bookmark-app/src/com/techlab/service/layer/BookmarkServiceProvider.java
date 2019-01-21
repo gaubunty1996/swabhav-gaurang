@@ -12,7 +12,7 @@ import java.util.Scanner;
 import com.techlab.buissness.layer.Bookmark;
 
 public class BookmarkServiceProvider {
-	static String fileName = "C:\\Users\\gaurang\\Desktop\\bookmark.html";
+	static String fileName = "data\\bookmark.html";
 
 	public void addBookmark(String name, String url) throws IOException {
 		File file = new File(fileName);
