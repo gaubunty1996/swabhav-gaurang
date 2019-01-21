@@ -1,24 +1,30 @@
 package com.techlab.employeeTest;
 
 import com.techlabs.employee.Accountant;
+import com.techlabs.employee.Developer;
 import com.techlabs.employee.Employee;
 import com.techlabs.employee.Manager;
 
 public class GenerateSalary {
-
-	public static void main(String[] args) {
-		Manager manager1 = new Manager("Gaurang", 1, "Manager");
-		generatePaySlip(manager1);
-		System.out.println(manager1.getSalary());
-		
-		Accountant accountant = new Accountant("Jaaie", 1, "Accountant");
-		generatePaySlip(accountant);
-		System.out.println(accountant.getSalary());
+	public static void printPaySlip(Employee employee) {
+		employee.salary();
+		System.out.println("Employee's salary : "+employee.getSalary());
+		System.out.println("Employee's house rentanl allowance : "+employee.getHouseRentalAllowance());
+		System.out.println("Employee's performance allowance : "+employee.getPerformanceAllowance());
+		System.out.println("Employee's travel allowance : "+employee.getTravelAllowance());
+		System.out.println("Employee's perks : "+employee.getPerks());
+		System.out.println("Employee's role : "+employee.getRole());
+		System.out.println("\n");
 	}
 
-	public static void generatePaySlip(Employee employee) {
-		System.out.println(employee.getEmployeeName());
-		System.out.println(employee.getEmployeeNumber());
-		employee.salary();
+	public static void main(String[] args) {
+		Manager manager = new Manager("Gaurang", 1, "Manager");
+		printPaySlip(manager);
+		
+		Accountant accountant = new Accountant("Jaaie", 2, "Accountant");
+		printPaySlip(accountant);
+		
+		Developer developer = new Developer("soham", 3, "Developer");
+		printPaySlip(developer);
 	}
 }

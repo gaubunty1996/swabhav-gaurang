@@ -1,10 +1,10 @@
 package com.techlabs.employee;
 
 public class Manager extends Employee {
-	private double houseRentalAllowance;
-	private double travelAllowance;
-	private double salaryOfManager;
-	private String role;
+	//private double houseRentalAllowance;
+	//private double travelAllowance;
+	//private double salaryOfManager;
+	//private String role;
 
 	public Manager(String employeeName, int employeeNumber, String role) {
 		super(employeeName, employeeNumber);
@@ -21,17 +21,13 @@ public class Manager extends Employee {
 		return travelAllowance;
 	}
 
-	public double getSalary() {
-		return salaryOfManager;
-	}
-
 	public String getRole() {
 		return role;
 	}
 
 	@Override
 	public void salary() {
-		this.salaryOfManager = (basic + (this.houseRentalAllowance + this.travelAllowance));
+		this.salary = (basic + (this.houseRentalAllowance + this.travelAllowance));
 	}
 
 }
