@@ -7,24 +7,33 @@ import com.techlabs.employee.Manager;
 
 public class GenerateSalary {
 	public static void printPaySlip(Employee employee) {
-		employee.salary();
-		System.out.println("Employee's role : " + employee.getRole());
-		System.out.println("Employee's salary : " + employee.getSalary());
-		if (employee.getHouseRentalAllowance() > 0) {
+		
+		if(employee instanceof Manager) {
+			employee.salary();
+			System.out.println("Employee's role : " + employee.getRole());
+			System.out.println("Employee's salary : " + employee.getSalary());
 			System.out.println("Employee's house rentanl allowance : " + employee.getHouseRentalAllowance());
-		}
-		if (employee.getPerformanceAllowance() > 0) {
-			System.out.println("Employee's performance allowance : " + employee.getPerformanceAllowance());
-		}
-		if (employee.getTravelAllowance() > 0) {
 			System.out.println("Employee's travel rentanl allowance : " + employee.getTravelAllowance());
-		}
-		if (employee.getPerks() > 0) {
+			System.out.println("\n");
+			return;
+			}
+		if(employee instanceof Accountant) {
+			employee.salary();
+			System.out.println("Employee's role : " + employee.getRole());
+			System.out.println("Employee's salary : " + employee.getSalary());
 			System.out.println("Employee's perks : " + employee.getPerks());
+			System.out.println("\n");
+			return;
+			}
+		if(employee instanceof Developer) {
+			employee.salary();
+			System.out.println("Employee's role : " + employee.getRole());
+			System.out.println("Employee's salary : " + employee.getSalary());
+			System.out.println("Employee's performance allowance : " + employee.getPerformanceAllowance());
+			System.out.println("\n");
+			return;
+			}
 		}
-		System.out.println("\n");
-
-	}
 
 	public static void main(String[] args) {
 		Manager manager = new Manager("Gaurang", 1, "Manager");

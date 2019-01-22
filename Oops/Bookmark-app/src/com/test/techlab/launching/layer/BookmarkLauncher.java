@@ -14,16 +14,16 @@ public class BookmarkLauncher {
 		boolean wantToExit = true;
 		while (wantToExit) {
 
-			System.out.println("If you want to add bookmark, press a: ");
-			System.out.println("If you want to view bookmark, press v: ");
-			System.out.println("If you want to export bookmark, press e: ");
-			System.out.println("If you want to exit, press x: ");
+			System.out.println("If you want to add bookmark, press add: ");
+			System.out.println("If you want to view bookmark, press view: ");
+			System.out.println("If you want to export bookmark, press export: ");
+			System.out.println("If you want to exit, press exit: ");
 			String input = sc.next();
 			input = input.toLowerCase();
 			
 			switch (input) {
 			
-			case ("a"):
+			case ("add"):
 				String name = getWebsiteName();
 				String url = getUrlName();
 				bookmark.callToAdd(name, url);
@@ -32,17 +32,17 @@ public class BookmarkLauncher {
 				bsp.addBookmark(bookmark.getNameOfWebsite(), bookmark.getUrlOfWebsite());
 				break;
 			
-			case ("v"):
+			case ("view"):
 				bsp.displayBookmark();
 				break;
 			
-			case ("e"):
+			case ("export"):
 				String defaultDirectory = getCustomFilePath();
 				String customFileName = getCustomFileName();
 				bsp.exportBookmarks(defaultDirectory, customFileName);
 				break;
 			
-			case ("x"):
+			case ("exit"):
 				wantToExit = false;
 				break;
 			}
