@@ -10,21 +10,20 @@ public class GenerateSalary {
 		employee.salary();
 		System.out.println("Employee's role : " + employee.getRole());
 		System.out.println("Employee's salary : " + employee.getSalary());
-		if(employee.getHouseRentalAllowance()>0) {
+		if (employee.getHouseRentalAllowance() > 0) {
 			System.out.println("Employee's house rentanl allowance : " + employee.getHouseRentalAllowance());
 		}
-		if(employee.getPerformanceAllowance()>0) {
+		if (employee.getPerformanceAllowance() > 0) {
 			System.out.println("Employee's performance allowance : " + employee.getPerformanceAllowance());
 		}
-		if(employee.getTravelAllowance()>0) {
+		if (employee.getTravelAllowance() > 0) {
 			System.out.println("Employee's travel rentanl allowance : " + employee.getTravelAllowance());
 		}
-		if(employee.getPerks()>0) {
+		if (employee.getPerks() > 0) {
 			System.out.println("Employee's perks : " + employee.getPerks());
 		}
 		System.out.println("\n");
-		
-		
+
 	}
 
 	public static void main(String[] args) {
