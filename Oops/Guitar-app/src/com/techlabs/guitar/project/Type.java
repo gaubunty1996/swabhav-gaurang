@@ -1,11 +1,11 @@
 package com.techlabs.guitar.project;
 
 public enum Type {
-	ACCOUSTICS, ELECTRIC;
+ ELECTRIC, ACOUSTIC;
 
 	public String toString() {
 		switch (this) {
-		case ACCOUSTICS:
+		case ACOUSTIC:
 			return "accoustics";
 
 		case ELECTRIC:

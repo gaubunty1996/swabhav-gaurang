@@ -6,9 +6,8 @@ import java.util.*;
 public class Inventory {
 	ArrayList<Guitar> guitarlist1 = new ArrayList<Guitar>();
 
-	public void addGuitar(String serialNumber, double price, Builder builder, String model, Type type, Wood backwood,
-			Wood topwood) {
-		Guitar guitar = new Guitar(serialNumber, price, builder, model, type, backwood, topwood);
+	public void addGuitar(String serialNumber, double price, GuitarSpecs specs) {
+		Guitar guitar = new Guitar(serialNumber, price,specs);
 		guitarlist1.add(guitar);
 	}
 
@@ -20,5 +19,16 @@ public class Inventory {
 		}
 		return null;
 	}
+	
+	public List search(GuitarSpecs searchSpec) {
+		List matchingGuitars = new LinkedList();
+		for (Iterator i = guitarlist1.iterator(); i.hasNext(); ) {
+			Guitar guitar = (Guitar)i.next();
+			if (guitar.getSpec().matches(searchSpec)){
+				matchingGuitars.add(guitar);
+			}				
+		}
+		return matchingGuitars;
+}
 
 }
