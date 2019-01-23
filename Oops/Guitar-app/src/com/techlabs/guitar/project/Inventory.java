@@ -4,7 +4,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public class Inventory {
-	ArrayList<Guitar> guitarlist1 = new ArrayList<Guitar>();
+	public ArrayList<Guitar> guitarlist1 = new ArrayList<Guitar>();
 
 	public void addGuitar(String serialNumber, double price, GuitarSpecs specs) {
 		Guitar guitar = new Guitar(serialNumber, price,specs);
