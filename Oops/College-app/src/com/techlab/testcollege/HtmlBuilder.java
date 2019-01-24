@@ -31,6 +31,7 @@ public class HtmlBuilder {
 	public static void htmlGenerator(College college) throws IOException {
 		String fileName = "C:\\Users\\gaurang\\Desktop\\college.html";
 		FileWriter filewriter = new FileWriter(fileName, false);
+		filewriter.append("<html><title></title><body>");
 		filewriter.append("<div><h1><strong>College name :" + college.getName() + "</b></h1><strong>" + "\t"
 				+ "<div>No of Students in this college :" + college.getStudentCount() + "<br>" + "\t"
 				+ "<div>No of Professos in this college :" + college.getProfessorCount() + "<br>");
@@ -47,6 +48,7 @@ public class HtmlBuilder {
 			filewriter.append("<div> ID : " + professor.getId() + "</div>" + "<div> Address : " + professor.getAddress()
 					+ "</div>" + "<div> DOB : " + professor.getDate() + "</div>");
 		}
+		filewriter.append("</body></html>");
 		filewriter.close();
 	}
 

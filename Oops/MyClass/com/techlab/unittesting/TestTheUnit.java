@@ -7,11 +7,27 @@ import org.junit.jupiter.api.Test;
 class TestTheUnit {
 
 	@Test
-	void cubetest() throws Exception {
+	void NegativeOddTest() throws Exception {
 		UnitTestingExample unit = new UnitTestingExample();
+		try {
 		int result = unit.cubeOfEven(-3);
-		assertEquals(27,result);
-		
+		fail("This should throe exception");
+		}
+		catch(Exception e){
+		assertEquals(e.getMessage(),"Dont pass negative numbers");
+		}
 	}
+	@Test
+	void PositiveOddTest() throws Exception {
+		UnitTestingExample unit = new UnitTestingExample();
+		try {
+		int result = unit.cubeOfEven(3);
+		fail("This should throw an exception");
+		}catch(Exception e) {
+		assertEquals("Dont pass odd numbers",e.getMessage());
+		}
+	}
+	
+	
 
 }
