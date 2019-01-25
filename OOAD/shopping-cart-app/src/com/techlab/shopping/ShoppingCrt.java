@@ -19,9 +19,10 @@ public class ShoppingCrt {
 		Order order = new Order(date);
 		order.addItem(new LineItem(5, 2, new Product(1, "Apple", 50, 10f)));
 		order.addItem(new LineItem(4, 5, new Product(2, "Banana", 50, 10f)));
+		order.addItem(new LineItem(4, 5, new Product(2, "Banana", 50, 10f)));
 		customer.addOrder(order);
 		receiptV3(customer);
-		
+
 	}
 
 	public static void receiptV3(Customer customer) {
