@@ -26,15 +26,16 @@ public class ShoppingCrt {
 		System.out.println("Customer's name is : \t" + customer.getName());
 		System.out.println("Customer's location is :" + customer.getLocation());
 		for (Order orders : customer.getOrders()) {
-			System.out.println("Product Id:\t" + orders.getItems().get(0).getProduct().getId() + "\t");
-			System.out.println("Product Name :\t" + orders.getItems().get(0).getProduct().getName());
-			System.out.println("Quantity of purchased product:\t" + orders.getItems().get(0).getQuantity());
-			System.out.println("Product Orignal Price:\t" + orders.getItems().get(0).getProduct().getCost() + "\t");
+			for(int i=0;i<orders.getItems().size();i++) {
+			System.out.println("Product Id:\t" + orders.getItems().get(i).getProduct().getId() + "\t");
+			System.out.println("Product Name :\t" + orders.getItems().get(i).getProduct().getName());
+			System.out.println("Quantity of purchased product:\t" + orders.getItems().get(i).getQuantity());
+			System.out.println("Product Orignal Price:\t" + orders.getItems().get(i).getProduct().getCost() + "\t");
 			System.out.println(
-					"Prodect's discount price: " + orders.getItems().get(0).getProduct().calculateDiscountedPrice());
-			System.out.println("Total price: " + orders.getItems().get(1).itemCostOfLineWithoutDiscount());
-			System.out.println("Total price: " + orders.getItems().get(1).itemCostOfLineItem());
-
+					"Prodect's discount price: " + orders.getItems().get(i).getProduct().calculateDiscountedPrice());
+			System.out.println("Total price: " + orders.getItems().get(i).itemCostOfLineWithoutDiscount());
+			System.out.println("Total price: " + orders.getItems().get(i).itemCostOfLineItem());
+			}
 		}
 	}
 
