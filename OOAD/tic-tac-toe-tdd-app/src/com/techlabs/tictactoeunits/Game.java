@@ -3,15 +3,15 @@ package com.techlabs.tictactoeunits;
 import java.lang.invoke.SwitchPoint;
 
 public class Game {
-	public static Board gameboard = new Board();
+	public static IBoard gameboard = new Board();
 	private Player player1;
 	private Player player2;
 	private Player currentPlayer;
 	private Player otherPlayer;
 	private CurrentGameState currentstate = CurrentGameState.NOTSTARTED;
-	private ResultChecker resultchecker;
+	private IResultAnalyzer resultchecker;
 
-	public Game(Player player1, Player player2, ResultChecker resultchecker) {
+	public Game(Player player1, Player player2, IResultAnalyzer resultchecker) {
 		super();
 		this.player1 = player1;
 		this.player2 = player2;
@@ -58,12 +58,14 @@ public class Game {
 	}
 
 	public CurrentGameState play(int position) throws Exception {
-		if (gameboard.isCellEmpty(position)) {
+		
+		if ((gameboard.isCellEmpty(position))) {
 			gameboard.setMarkatCustomLocation(position, getMark());
 			switchThePlayer();
 			this.currentstate=resultchecker.checkIfWon(this);
 			return resultchecker.checkIfWon(this);
 		}
+		
 		this.currentstate=CurrentGameState.DUPLICATE_NUMBER;
 		return currentstate;
 	}

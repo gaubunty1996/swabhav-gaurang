@@ -36,10 +36,16 @@ public class Board {
 	}
 
 	public void setMarkatCustomLocation(int index, Mark mark) throws Exception {
+		if(index<0 || index>8) {
+			throw new RuntimeException("Please enter valid index position");
+		}
 		gameboard[index].setMark(mark);
 	}
 
 	public Mark getMarkfromLocation(int index) {
+		if(index<0 || index>8) {
+			throw new RuntimeException("Please enter valid index position");
+		}
 		return gameboard[index].getMark();
 	}
 

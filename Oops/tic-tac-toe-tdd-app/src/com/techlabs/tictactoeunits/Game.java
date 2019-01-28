@@ -58,11 +58,16 @@ public class Game {
 	}
 
 	public CurrentGameState play(int position) throws Exception {
-		if (gameboard.isCellEmpty(position)) {
+		try {
+		if ((gameboard.isCellEmpty(position))) {
 			gameboard.setMarkatCustomLocation(position, getMark());
 			switchThePlayer();
 			this.currentstate=resultchecker.checkIfWon(this);
 			return resultchecker.checkIfWon(this);
+		}
+		}catch(RuntimeException e) {
+			System.out.println(e.getMessage());
+			return CurrentGameState.INVALID;
 		}
 		this.currentstate=CurrentGameState.DUPLICATE_NUMBER;
 		return currentstate;

@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import com.techlabs.tictactoeunits.Board;
+import com.techlabs.tictactoeunits.Console;
+import com.techlabs.tictactoeunits.Mark;
 
 class TestBoard {
 
@@ -14,10 +16,21 @@ class TestBoard {
 		boolean b=board.checkIfEmpty();
 		assertEquals(true, b);
 	}
+	@Test
 	void checkiffull() throws Exception {
 		Board board = new Board();
 		boolean b=board.checkIfFull();
-		assertEquals(true, b);
+		assertEquals(false, b);
 	}
+	@Test
+	void setMark() throws Exception{
+		Board board = new Board();
+		Console console = new Console();
+		board.setMarkatCustomLocation(0, Mark.CROSS);
+		Mark setMark = board.getMarkfromLocation(0);
+		assertEquals(Mark.CROSS, setMark);
+	}
+	
+	
 
 }

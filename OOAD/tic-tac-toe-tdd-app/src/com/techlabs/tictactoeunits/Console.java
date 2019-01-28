@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Console {
 	public static void main(String[] args) throws Exception {
-		ResultChecker resultchecker = new ResultChecker();
+		IResultAnalyzer resultchecker = new ResultChecker();
 		Scanner scanner = new Scanner(System.in);
 
 		System.out.println("Enter player1's name:");
@@ -20,12 +20,12 @@ public class Console {
 
 		Game game = new Game(player1, player2, resultchecker);
 		System.out.println();
-		//startPlayingTheGame(game);
 		playTheGame(game);
+		System.out.println("\n");
 		printBoard(game.gameboard);
 	}
 
-	public static void printBoard(Board gameboard) {
+	public static void printBoard(IBoard gameboard) {
 		System.out.println(gameboard.getMarkfromLocation(0) + " | " + gameboard.getMarkfromLocation(1) + " | "
 				+ gameboard.getMarkfromLocation(2));
 		System.out.println("_____________________");
@@ -36,30 +36,33 @@ public class Console {
 				+ gameboard.getMarkfromLocation(8));
 	}
 
-	
 	public static void playTheGame(Game game) throws Exception {
 		CurrentGameState state = game.getCurrentstate();
 		System.out.println("Game's current status is :" + state);
 		Scanner scanner = new Scanner(System.in);
-		while(true) {
-			
+		while (true) {
+			System.out.println("\n");
 			System.out.println("Enter index to play");
 			int index = scanner.nextInt();
+
 			if (state == CurrentGameState.NOTSTARTED || state == CurrentGameState.INPROGRESS) {
-				System.out.println("Current status of game is: " + game.play(index));
+				try {
+					System.out.println("Current status of game is: " + game.play(index));
+				} catch (RuntimeException e) {
+					System.out.println(e.getMessage());
+				}
 				state = game.getCurrentstate();
 				if (state == CurrentGameState.WIN) {
 					System.out.println(game.getOtherPlayer().getName() + " Has won");
 					return;
-				}
-				else if (state == CurrentGameState.DRAW) {
+				} else if (state == CurrentGameState.DRAW) {
 					System.out.println("Game is draw");
 					return;
 				}
-				if (state == CurrentGameState.DUPLICATE_NUMBER) {
-					return;
-				}
+
 			}
+			System.out.println("\n");
+			printBoard(game.gameboard);
 		}
 
 	}

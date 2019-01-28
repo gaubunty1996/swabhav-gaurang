@@ -20,7 +20,9 @@ public class Console {
 
 		Game game = new Game(player1, player2, resultchecker);
 		System.out.println();
-		startPlayingTheGame(game);
+		playTheGame(game);
+		System.out.println("\n");
+		printBoard(game.gameboard);
 	}
 
 	public static void printBoard(Board gameboard) {
@@ -34,65 +36,17 @@ public class Console {
 				+ gameboard.getMarkfromLocation(8));
 	}
 
-	public static void startPlayingTheGame(Game game) throws Exception {
+	public static void playTheGame(Game game) throws Exception {
 		CurrentGameState state = game.getCurrentstate();
 		System.out.println("Game's current status is :" + state);
-
+		Scanner scanner = new Scanner(System.in);
 		while (true) {
-			if (state == CurrentGameState.NOTSTARTED || state == CurrentGameState.INPROGRESS) {
-				System.out.println("Current status of game is: " + game.play(0));
-				state = game.getCurrentstate();
-			}
-			if (state == CurrentGameState.INPROGRESS) {
-				System.out.println("Current status of game is: " + game.play(8));
-				state = game.getCurrentstate();
-				if (state == CurrentGameState.DUPLICATE_NUMBER) {
-					return;
-				}
-			}
-			if (state == CurrentGameState.INPROGRESS) {
-				System.out.println("Current status of game is: " + game.play(1));
-				state = game.getCurrentstate();
-			}
-			if (state == CurrentGameState.INPROGRESS) {
-				System.out.println("Current status of game is: " + game.play(7));
-				state = game.getCurrentstate();
-			}
-			if (state == CurrentGameState.INPROGRESS) {
-				System.out.println("Current status of game is: " + game.play(2));
-				state = game.getCurrentstate();
-				if (state == CurrentGameState.WIN) {
-					System.out.println(game.getOtherPlayer().getName() + " Has won");
-					return;
-				}
-			}
-			if (state == CurrentGameState.INPROGRESS) {
-				System.out.println("Current status of game is: " + game.play(6));
-				state = game.getCurrentstate();
-				if (state == CurrentGameState.WIN) {
-					System.out.println(game.getOtherPlayer().getName() + " Has won");
-					return;
-				}
+			System.out.println("\n");
+			System.out.println("Enter index to play");
+			int index = scanner.nextInt();
 
-			}
-			if (state == CurrentGameState.INPROGRESS) {
-				System.out.println("Current status of game is: " + game.play(3));
-				state = game.getCurrentstate();
-				if (state == CurrentGameState.WIN) {
-					System.out.println(game.getOtherPlayer().getName() + " Has won");
-					return;
-				}
-			}
-			if (state == CurrentGameState.INPROGRESS) {
-				System.out.println("Current status of game is: " + game.play(5));
-				state = game.getCurrentstate();
-				if (state == CurrentGameState.WIN) {
-					System.out.println(game.getOtherPlayer().getName() + " Has won");
-					return;
-				}
-			}
-			if (state == CurrentGameState.INPROGRESS) {
-				System.out.println("Current status of game is: " + game.play(4));
+			if (state == CurrentGameState.NOTSTARTED || state == CurrentGameState.INPROGRESS) {
+				System.out.println("Current status of game is: " + game.play(index));
 				state = game.getCurrentstate();
 				if (state == CurrentGameState.WIN) {
 					System.out.println(game.getOtherPlayer().getName() + " Has won");
@@ -101,9 +55,14 @@ public class Console {
 					System.out.println("Game is draw");
 					return;
 				}
-			}
-			return;
+				if (state == CurrentGameState.DUPLICATE_NUMBER) {
+					return;
+				}
 
+			}
+			System.out.println("\n");
+			printBoard(game.gameboard);
 		}
+
 	}
 }
