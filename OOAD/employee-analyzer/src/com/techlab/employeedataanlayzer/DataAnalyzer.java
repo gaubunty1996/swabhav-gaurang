@@ -7,35 +7,45 @@ import java.util.TreeSet;
 
 public class DataAnalyzer {
 	Parser parser;
+	static Map<Integer, Integer> map = new TreeMap<Integer, Integer>();
+	static Map<String, Integer> map1 = new TreeMap<String, Integer>();
 
 	public Map<String, Integer> CountOfEmployeeByDesignation(TreeSet<Employee> treeset) {
-		Map<String, Integer> map = new TreeMap<String, Integer>();
+		Map<String, Integer> map1 = new TreeMap<String, Integer>();
 		for (Employee empolyee : treeset) {
-			if (map.get(empolyee.getDesignation()) == null) {
-				map.put(empolyee.getDesignation(), 1);
-			} else {
-				int counter = map.get(empolyee.getDesignation());
-				counter++;
-				map.put(empolyee.getDesignation(), counter);
+			setDesignation(empolyee);
+		}
+		return DataAnalyzer.map1;
+	}
 
-			}
+	public Map<Integer, Integer> CountOfEmployeeByDepartmentNumber(TreeSet<Employee> treeset) {
+
+		for (Employee empolyee : treeset) {
+			setDepartment(empolyee);
 		}
 		return map;
 	}
 
-	public Map<Integer, Integer> CountOfEmployeeByDepartmentNumber(TreeSet<Employee> treeset) {
-		Map<Integer, Integer> map = new TreeMap<Integer, Integer>();
-		for (Employee empolyee : treeset) {
-			if (map.get(empolyee.getDepartmentNumber()) == null) {
-				map.put(empolyee.getDepartmentNumber(), 1);
-			} else {
-				int counter = map.get(empolyee.getDepartmentNumber());
-				counter++;
-				map.put(empolyee.getDepartmentNumber(), counter);
+	public static void setDesignation(Employee employee) {
+		if (map1.get(employee.getDesignation()) == null) {
+			map1.put(employee.getDesignation(), 1);
+		} else {
+			int counter = map1.get(employee.getDesignation());
+			counter++;
+			map1.put(employee.getDesignation(), counter);
 
-			}
 		}
-		return map;
+	}
+
+	public static void setDepartment(Employee employee) {
+		if (map.get(employee.getDepartmentNumber()) == null) {
+			map.put(employee.getDepartmentNumber(), 1);
+		} else {
+			int counter = map.get(employee.getDepartmentNumber());
+			counter++;
+			map.put(employee.getDepartmentNumber(), counter);
+
+		}
 	}
 
 	public String maximumSalarisedEmployees(ArrayList<Employee> list) throws Exception {
