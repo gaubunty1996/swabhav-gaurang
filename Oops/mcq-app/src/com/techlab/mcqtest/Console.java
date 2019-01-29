@@ -17,13 +17,14 @@ public class Console {
 		for (int i = 0; i < total; i++) {
 			analyzeResult(bank, i);
 		}
-		float winPercentage = (100 / total) * winCount ;
-		System.out.println("You got " + winCount + " questions correct " + " out of " + total + " questions");
-		System.out.println("Win percentage is: " + winPercentage);
+		//float winPercentage = (100 / bank.getTotal()) * bank.getWinCount();
+		System.out.println(
+				"You got " + bank.getWinCount() + " questions correct " + " out of " + bank.getTotal() + " questions");
+		System.out.println("Win percentage is: " + bank.returnWinPercentage(bank));
 
 	}
 
-	public static void analyzeResult(QuestionBank bank, int i) {
+	public static void analyzeResult(QuestionBank bank, int i) throws IOException {
 		System.out.println(bank.getQuestions().get(i).getQuestionString() + "\n");
 		System.out.println(bank.getQuestions().get(i).getOptions().getOption1() + "\n");
 		System.out.println(bank.getQuestions().get(i).getOptions().getOption2() + "\n");
@@ -32,9 +33,7 @@ public class Console {
 		System.out.println("Enter your answer as a ,b ,c , d");
 		Scanner sc1 = new Scanner(System.in);
 		String input = sc1.nextLine();
-		if (bank.getQuestions().get(i).getAnswer().toString().startsWith(input)) {
-			winCount++;
-		}
+		bank.checkAnswers(bank, i, input);
 	}
 
 }

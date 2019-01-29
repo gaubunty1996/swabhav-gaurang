@@ -11,6 +11,21 @@ import java.util.UUID;
 
 public class QuestionBank {
 	private ArrayList<Question> questions;
+	private int winCount;
+	private int total;
+	private float winPercentage;
+
+	public int getWinCount() {
+		return winCount;
+	}
+
+	public int getTotal() {
+		return total;
+	}
+
+	public float getWinPercentage() {
+		return winPercentage;
+	}
 
 	public QuestionBank() throws IOException {
 		questions = new ArrayList<Question>();
@@ -63,10 +78,11 @@ public class QuestionBank {
 		while ((st = br.readLine()) != null) {
 			st = st.toLowerCase();
 			String[] names = st.split(",");
-			Options newOption = new Options(names[1].substring(1, names[1].length()-1), names[2].substring(1, names[2].length()-1),
-					names[3].substring(1, names[3].length()-1), names[4].substring(1, names[4].length()-1));
-			questions.add(
-					new Question(names[0].substring(1, names[0].length()-1), newOption, names[5].substring(1, names[5].length()-1)));
+			Options newOption = new Options(names[1].substring(1, names[1].length() - 1),
+					names[2].substring(1, names[2].length() - 1), names[3].substring(1, names[3].length() - 1),
+					names[4].substring(1, names[4].length() - 1));
+			questions.add(new Question(names[0].substring(1, names[0].length() - 1), newOption,
+					names[5].substring(1, names[5].length() - 1)));
 		}
 		// System.out.println("\n");
 		br.close();
@@ -94,6 +110,19 @@ public class QuestionBank {
 		}
 		return customQuestionList;
 
+	}
+
+	public void checkAnswers(QuestionBank bank, int i, String input) throws IOException {
+		total = bank.getQuestionsInRange(5).size();
+		if (bank.getQuestions().get(i).getAnswer().toString().startsWith(input)) {
+			winCount++;
+		}
+
+	}
+
+	public float returnWinPercentage(QuestionBank bank) {
+		winPercentage=(100 / bank.getTotal()) * bank.getWinCount();
+		return winPercentage;
 	}
 
 }
