@@ -12,19 +12,6 @@ public class Employee implements Comparable<Employee> {
 	private int departmentNumber;
 	private int salary;
 
-	/*public Employee(String name, String designation, int empId, int managerId, int commission, Date dateOfJoining,
-			int departmentNumber, int salary) {
-		super();
-		this.name = name;
-		this.designation = designation;
-		this.empId = empId;
-		this.managerId = managerId;
-		this.commission = commission;
-		this.dateOfJoining = dateOfJoining;
-		this.departmentNumber = departmentNumber;
-		this.salary = salary;
-	}*/
-
 	public String getName() {
 		return name;
 	}
@@ -91,10 +78,8 @@ public class Employee implements Comparable<Employee> {
 
 	@Override
 	public int compareTo(Employee o) {
-		return this.salary - o.salary;
-		
+		return this.empId - o.empId;
+
 	}
-	
-	
 
 }

@@ -13,6 +13,7 @@ public class Parser  {
 	Employee employee;
 	public ArrayList<Employee> employees = new ArrayList<Employee>();
 	
+	
 	  public ArrayList<Employee> parses(ILoader iloader) throws IOException {
 	  
 	  for (String line : iloader.load()) { String[] details = line.split(",");
@@ -29,7 +30,7 @@ public class Parser  {
 	 
 	public TreeSet<Employee> uniqueEmployeeList = new TreeSet<Employee>();
 
-	public ArrayList<Employee> parse(ILoader iloader) throws IOException {
+	public TreeSet<Employee> parse(ILoader iloader) throws IOException {
 
 		for (String line : iloader.load()) {
 			String[] details = line.split(",");
@@ -44,7 +45,7 @@ public class Parser  {
 			employee.setDepartmentNumber(Integer.parseInt(details[7]));
 			uniqueEmployeeList.add(employee);
 		}
-		return null;
+		return uniqueEmployeeList;
 
 	}
 
