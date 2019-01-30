@@ -17,7 +17,6 @@ public class Console {
 		for (int i = 0; i < total; i++) {
 			analyzeResult(bank, i);
 		}
-		//float winPercentage = (100 / bank.getTotal()) * bank.getWinCount();
 		System.out.println(
 				"You got " + bank.getWinCount() + " questions correct " + " out of " + bank.getTotal() + " questions");
 		System.out.println("Win percentage is: " + bank.returnWinPercentage(bank));

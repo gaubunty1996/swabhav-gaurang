@@ -66,7 +66,6 @@ public class QuestionBank {
 		Options newOption10 = new Options("A)Color", "B)Animal", "C)Thing", "D)vehicle");
 		questions.add(new Question("What is Black?", newOption10, "A"));
 
-		System.out.println("Hi");
 
 	}
 
@@ -84,7 +83,6 @@ public class QuestionBank {
 			questions.add(new Question(names[0].substring(1, names[0].length() - 1), newOption,
 					names[5].substring(1, names[5].length() - 1)));
 		}
-		// System.out.println("\n");
 		br.close();
 	}
 
