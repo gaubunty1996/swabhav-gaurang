@@ -6,9 +6,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 public class ChangeColor implements MouseMotionListener,MouseListener {
-	private CommonListner change;
-	public ChangeColor(CommonListner color) {
-		change=color;
+	private CommonListner frame;
+	public ChangeColor(CommonListner commonlistnerframe) {
+		this.frame=commonlistnerframe;
 	}
 	
 
@@ -26,9 +26,13 @@ public class ChangeColor implements MouseMotionListener,MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (e.getComponent().get)
-		e.getComponent().setBackground(Color.RED);
-		change.getContainer().setBackground(Color.RED);
+		
+		if(e.getSource() ==frame.getJbt()) {
+			frame.getContainer().setBackground(Color.RED);
+		}
+		if(e.getSource() ==frame.getJbt2()) {
+			frame.getContainer().setBackground(Color.BLUE);
+		}
 		
 	}
 

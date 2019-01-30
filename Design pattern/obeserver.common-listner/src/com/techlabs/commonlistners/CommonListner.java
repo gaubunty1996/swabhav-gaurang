@@ -23,19 +23,19 @@ public class CommonListner  extends JFrame{
 	}
 
 	public CommonListner() {
-		setTitle("CommonListenrs");
-		setSize(500, 500);
-		setLayout(new FlowLayout());
-		setVisible(true);
+		this.setTitle("CommonListenrs");
+		this.setSize(500, 500);
+		this.setLayout(new FlowLayout());
+		this.setVisible(true);
 		container = getContentPane();
-		jbt = new JButton("Red");
+		this.jbt = new JButton("Red");
 		jbt.setBounds(100, 100, 100, 100);
 		container.add(jbt);
-		jbt2 = new JButton("Blue");
-		jbt2.setBounds(200, 200, 100, 100);
+		this.jbt2 = new JButton("Blue");
+		jbt2.setBounds(200, 100, 100, 100);
 		container.add(jbt2);
-		jbt.addActionListener(new PrintText("Red"));
-		jbt2.addActionListener(new PrintText("Blue"));
+		jbt.addActionListener(new PrintText());
+		jbt2.addActionListener(new PrintText());
 		jbt.addMouseListener(new ChangeColor(this));
 		jbt2.addMouseListener(new ChangeColor(this));
 
