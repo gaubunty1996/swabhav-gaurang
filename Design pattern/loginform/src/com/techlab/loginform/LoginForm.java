@@ -71,5 +71,6 @@ public class LoginForm extends JFrame {
 		frame.setSize(400, 400);
 		frame.setLayout(null);
 		frame.setVisible(true);
+		button1.addActionListener(new CheckCredentials(this));
 	}
 }
