@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body id="mainbody">
+    <button id="buttonred" name="redbutton" value="red" onclick="changeBackground(this)">Red</button>
+    <button id="buttonblue" name="bluebutton" value="blue" onclick="changeBackground(this)">Blue</button>
+
+    <script>
+        function changeBackground(event){
+
+            if(event.value=="red"){
+                document.getElementById("mainbody").style.backgroundColor="red";
+            }
+            else{
+                document.getElementById("mainbody").style.backgroundColor="blue";
+            }
+            
+        }
+    </script>
+</body>
+</html>
+
+

@@ -18,12 +18,11 @@ public class ButtonChecker implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		try {
 
 			if (e.getActionCommand().equals("0")) {
 				game.play(0);
-				
 
 			} else if (e.getActionCommand().equals("1")) {
 				game.play(1);

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    </style>
+	<title></title>
+</head>
+<body>
+    <div>
+        
+            Enter name:
+            <input type="text" id="input" placeholder="Add something">
+            <input type="submit" name="Add" onclick="newItem() "> 
+            <span id="alertuser" style="color:red" ></span>    
+    </div>
+    
+    <p id="Append">
+        <ul id="list" >
+        </ul>
+    </p>
+    <script>
+        
+        function newItem() {
+             var item = document.getElementById("input").value;
+             
+                var ul = document.getElementById("list");
+                var li = document.createElement("li");
+
+                if(item!="" && item!=" "){
+                li.appendChild(document.createTextNode(" " + item));
+                ul.appendChild(li);
+                document.getElementById("input").value = "";
+                document.getElementById("alertuser").innerHTML="";
+                }
+                else{
+                    document.getElementById("alertuser").innerHTML="*wrong";   
+                }
+            
+                }
+    
+
+            
+             
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Slider-app</title>
+</head>
+<body>
+    <div>
+            <input type="range" id="slide" min="1" max="100" value="10" onchange="display()">
+    </div>
+    <div>
+        <p id="slideDataDisplay">
+
+        </p>
+    </div>
+    <div>
+        <p id="messageDisplay">
+    
+        </p>
+        </div>
+    <div id="Buttondisplay">
+       
+    </div>
+    
+    
+<script>
+    function display(){
+        var slideDataNumber = document.getElementById("slide").value;
+        console.log(slideDataNumber);
+        document.getElementById("slideDataDisplay").innerHTML="Current position: "+slideDataNumber;
+        document.getElementById("messageDisplay").innerHTML="";
+        var buttonDisplay = document.getElementById("Buttondisplay");
+        buttonDisplay.innerHTML="";
+        var i;
+        for (i=1;i<=slideDataNumber;i++){
+                    var buttonName=document.createElement("BUTTON");
+                    buttonName.setAttribute("id",i);
+                    buttonName.addEventListener('click',buttonClick);
+                    buttonName.innerHTML=i;
+                    buttonName.style.height=60;
+                    buttonName.style.width=100;
+                    buttonName.style.margin=5;
+                    buttonDisplay.appendChild(buttonName); 
+        }
+
+    }
+    function buttonClick(event){ 
+                var index=event.srcElement.id;
+                console.log(index);
+                document.querySelector("#messageDisplay").innerHTML=index+"Clicked";
+            }
+</script>
+</body>
+</html>
