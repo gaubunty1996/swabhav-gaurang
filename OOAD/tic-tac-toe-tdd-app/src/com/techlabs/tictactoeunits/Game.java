@@ -11,6 +11,13 @@ public class Game {
 	private CurrentGameState currentstate = CurrentGameState.NOTSTARTED;
 	private IResultAnalyzer resultchecker;
 
+	public Game(Player player1, Player player2) {
+		this.player1 = player1;
+		this.player2 = player2;
+		this.currentPlayer = player1;
+		this.otherPlayer = player2;
+	}
+
 	public Game(Player player1, Player player2, IResultAnalyzer resultchecker) {
 		super();
 		this.player1 = player1;
@@ -20,6 +27,10 @@ public class Game {
 		this.resultchecker = resultchecker;
 	}
 
+	public static IBoard getGameboard() {
+		return gameboard;
+	}
+
 	public Player getCurrentPlayer() {
 		return currentPlayer;
 	}
@@ -27,7 +38,6 @@ public class Game {
 	public void setCurrentPlayer(Player currentPlayer) {
 		this.currentPlayer = currentPlayer;
 	}
-	
 
 	public Player getOtherPlayer() {
 		return otherPlayer;
@@ -58,20 +68,20 @@ public class Game {
 	}
 
 	public CurrentGameState play(int position) throws Exception {
-		
+
 		if ((gameboard.isCellEmpty(position))) {
 			gameboard.setMarkatCustomLocation(position, getMark());
 			switchThePlayer();
-			this.currentstate=resultchecker.checkIfWon(this);
+			this.currentstate = resultchecker.checkIfWon(this);
 			return resultchecker.checkIfWon(this);
 		}
-		
-		this.currentstate=CurrentGameState.DUPLICATE_NUMBER;
+
+		this.currentstate = CurrentGameState.DUPLICATE_NUMBER;
 		return currentstate;
 	}
 
 	public CurrentGameState getCurrentstate() {
 		return currentstate;
 	}
-	
+
 }

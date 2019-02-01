@@ -22,13 +22,13 @@ public class CheckCredentials implements ActionListener {
 		for (int i = 0; i < charPassword.length; i++) {
 			password = password + charPassword[i];
 		}
-		if (userName.equalsIgnoreCase("abc") && password.equals("abc@123")) {
+		if (userName.equalsIgnoreCase(password)) {
 			Welcome wel = new Welcome();
 			wel.setVisible(true);
 			JLabel label = new JLabel("Welcome:" + userName);
 			wel.getContentPane().add(label);
 		} else {
-			JOptionPane.showMessageDialog(loginForm, "Wrong inputs");
+			JOptionPane.showMessageDialog(loginForm, "Wrong username or password");
 		}
 	}
 }
