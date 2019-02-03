@@ -3,16 +3,12 @@ package com.techlab.service.layer;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
 
-import com.techlab.buissness.layer.Bookmark;
-
-public class BookmarkServiceProvider implements IBookmarkServiceProvider {
-	static String fileName = "data\\bookmark.html";
+public class BookmarkManager implements IBookmarkServiceProvider {
+	static String fileName = "data\\newbookmark.txt";
 
 	/* (non-Javadoc)
 	 * @see com.techlab.service.layer.IBookmarkServiceProvider#addBookmark(java.lang.String, java.lang.String)
@@ -21,8 +17,8 @@ public class BookmarkServiceProvider implements IBookmarkServiceProvider {
 	public void addBookmark(String name, String url) throws IOException {
 		File file = new File(fileName);
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
-		writer.append("<a href=https://" + url + ">" + name + "</a>");
-		writer.append("<br>");
+		writer.append("<a href=https://" + url + ">" + name + "</a><br>");
+		writer.newLine();
 		writer.close();
 	}
 
@@ -61,3 +57,4 @@ public class BookmarkServiceProvider implements IBookmarkServiceProvider {
 		System.out.println("The exported new file is stored in :"+customFinalPath);
 	}
 }
+

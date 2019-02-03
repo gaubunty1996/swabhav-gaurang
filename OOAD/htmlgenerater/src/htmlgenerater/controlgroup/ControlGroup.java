@@ -3,32 +3,37 @@ package htmlgenerater.controlgroup;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControlGroup implements IControl {
-	private String tagName;
+import htmlgenerater.controlgrouptest.TestHtmlGenerator;
 
-	private List<IControl> listOfTags = new ArrayList<IControl>();
-	public ControlGroup(String tagName) {
-		this.tagName=tagName;
+public class ControlGroup implements IControl {
+	private String name;
+
+	private List<IControl> nameList = new ArrayList<IControl>();
+
+	public ControlGroup(String name) {
+		this.name = name;
 	}
 
 	public String getTagName() {
-		return tagName;
+		return name;
 	}
 
 	public List<IControl> getListOfTags() {
-		return listOfTags;
-	}
-	public void addItem(IControl icontrol) {
-		listOfTags.add(icontrol);
+		return nameList;
 	}
 
+	public void addItem(IControl icontrol) {
+		nameList.add(icontrol);
+	}
 
 	@Override
 	public void displayDom() {
-		System.out.println("<"+tagName+">");
-		for (IControl element:listOfTags) {
+		System.out.println(TestHtmlGenerator.compositeBuilder + "   <" + name + ">");
+		TestHtmlGenerator.compositeBuilder.append("   ");
+		for (IControl element : nameList) {
 			element.displayDom();
 		}
-		System.out.println("</"+tagName+">");
+		System.out.println(TestHtmlGenerator.compositeBuilder + "</" + name + ">");
+		TestHtmlGenerator.compositeBuilder.setLength(TestHtmlGenerator.compositeBuilder.length() - 3);
 	}
 }

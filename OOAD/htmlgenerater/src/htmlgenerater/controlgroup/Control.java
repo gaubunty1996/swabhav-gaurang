@@ -1,25 +1,37 @@
 package htmlgenerater.controlgroup;
 
+import htmlgenerater.controlgrouptest.TestHtmlGenerator;
+
 public class Control implements IControl {
 
-	private String tagName;
+	private String name;
+	private String name1;
 
-	public Control(String tagName) {
+	public Control(String name, String name1) {
 		super();
-		this.tagName = tagName;
+		this.name = name;
+		this.name1 = name1;
 	}
 
-	public String getTagName() {
-		return tagName;
+	public String getName1() {
+		return name1;
 	}
 
-	public void setTagName(String tagName) {
-		this.tagName = tagName;
-}
+	public void setName1(String name1) {
+		this.name1 = name1;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	@Override
 	public void displayDom() {
-		System.out.println("<" + tagName + ">");
-		System.out.println("</" + tagName + ">");
+		System.out.println(TestHtmlGenerator.compositeBuilder + "<" + name + ">" + name1);
+		System.out.println(TestHtmlGenerator.compositeBuilder + "</" + name + ">");
 	}
-	}
+}

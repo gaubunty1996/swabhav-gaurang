@@ -4,20 +4,20 @@ import htmlgenerater.controlgroup.Control;
 import htmlgenerater.controlgroup.ControlGroup;
 
 public class TestHtmlGenerator {
+	public static StringBuffer compositeBuilder = new StringBuffer();
+
 	public static void main(String[] args) {
-		ControlGroup html = new ControlGroup("html");
+		ControlGroup htmlRoot = new ControlGroup("html");
 		ControlGroup body = new ControlGroup("body");
 		ControlGroup div = new ControlGroup("div");
 
-		Control p = new Control("p");
-		Control TextBox = new Control("textBox");
+		Control paragraph = new Control("p", "Enter name");
 
-		html.addItem(body);
+		htmlRoot.addItem(body);
 		body.addItem(div);
-		div.addItem(p);
-		div.addItem(TextBox);
+		div.addItem(paragraph);
 
-		html.displayDom();
+		htmlRoot.displayDom();
 	}
 
 }

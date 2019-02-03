@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+</head>
+<body>
+        <canvas id="canvas" width="500" height="500" />
+        <script>
+            function pie(){
+
+			var lastend = 0;
+		    var pieColor = ["#2EFE2E","#FF0000"];
+		var pieData = [70,30];
+			var pieTotal = 70+30;
+		
+			var canvas = document.getElementById("canvas");
+			var ctx = canvas.getContext("2d");
+			//console.log(canvas.width,canvas.height);
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			
+			var hwidth = ctx.canvas.width/2;
+            console.log( "width "+hwidth);
+			var hheight = ctx.canvas.height/2;
+			console.log("height "+hheight);
+			
+			for (var i = 0; i < pieData.length; i++) {
+					ctx.fillStyle = pieColor[i];
+					ctx.beginPath();
+					ctx.moveTo(hwidth,hheight);
+					ctx.arc(hwidth,hheight,hheight,lastend,lastend+
+					  (Math.PI*2*(pieData[i]/pieTotal)),false);
+                      console.log("endpoint "+Math.PI*2*(pieData[i]/pieTotal));
+					
+					ctx.lineTo(hwidth,hheight);
+					ctx.fill();
+
+					var radius = hheight/1.5; //use suitable radius
+                    console.log(" radius "+radius);
+					var endAngle = lastend + (Math.PI*(pieData[i]/pieTotal));
+                    console.log(" endangle: "+endAngle);
+					var setX = hwidth + Math.cos(endAngle) * radius;
+                    console.log(" setx "+setX);
+					var setY = hheight + Math.sin(endAngle) * radius;
+                    console.log(" sety "+setY);
+					ctx.fillStyle = "#ffffff";
+					ctx.font = '14px Calibri';
+					ctx.fillText(pieData[i],setX,setY);
+
+					lastend += Math.PI*2*(pieData[i]/pieTotal);
+                    console.log("Lastend "+lastend);
+		}	
+
+            }
+            window.onload = pie;
+
+        </script>
+</body>
+</html>
