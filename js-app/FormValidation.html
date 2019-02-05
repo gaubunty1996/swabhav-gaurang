@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+</head>
+<body>
+    <form name="Form" action="authentication.jsp" id ="formsubmit"  method="GET">
+        Enter Name :<input type="text" name="Name" id="fname"><span style ="color: red"id="alert"></span><br>
+        Enter Password : <input type="password" name="Password" id="Password"><span style ="color: red"id="alert"></span><br>
+        <input type="submit" value="Submit" id="submit"><br>
+    </form>
+    
+    <script>
+       var submitvalidate = document.getElementById("formsubmit").addEventListener("submit",validate)
+        function validate() {
+            var user = document.forms["Form"]["fname"].value;
+            var pass = document.forms["Form"]["Password"].value;
+            if (user == "") {
+                document.getElementById("alert").innerHTML="*please enter USERNAME";
+                return false;
+            }
+            if (pass==""){
+                document.getElementById("alert").innerHTML="*please enter password";
+                return false;
+            }
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Call Back</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div>
+        <input type="Button" name="Hello" id="hello" value="Hello">
+    </div>
+    <script>
+        function handelRequest(r) {
+            console.log("request is " + r);
+        }
+        function fnCubeEven(no, fn) {
+            if (no % 2 == 0) {
+                fn("Success " + (no * no * no));
+            }
+            else {
+                fn("ERROR : Not Even");
+            }
+        }
+        fnCubeEven(10, handelRequest);
+        fnCubeEven(25, handelRequest);
+        fnCubeEven(20, function (r) {
+            console.log("Inside Anonymous Function")
+            console.log(r);
+        });
+        var button = document.getElementById("hello");
+        button.addEventListener("click", print);
+        function print(event) {
+            console.log("function event listener");
+        }
+        button.addEventListener("click", function () {
+            console.log("Inside Anonymous Function");
+        });
+        setTimeout(function () {
+            console.log("After 3 sec");
+        }, 3000);
+       
+        setTimeout(print, 2000);
+        setTimeout(function(){
+            handelRequest("foo");
+        }, 4000);
+    </script>
+</body>
+
+</html>

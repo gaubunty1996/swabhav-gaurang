@@ -5,7 +5,7 @@
 </head>
 <body>
     <div>
-            <input type="range" id="slide" min="1" max="100" value="10" onchange="display()">
+            <input type="range" id="slide" min="1" max="100" value="10" >
     </div>
     <div>
         <p id="slideDataDisplay">
@@ -23,8 +23,14 @@
     
     
 <script>
+(
+    function(){
+    var slideData = document.getElementById("slide");
+    slideData.addEventListener("change",display);
     function display(){
+       
         var slideDataNumber = document.getElementById("slide").value;
+       
         console.log(slideDataNumber);
         document.getElementById("slideDataDisplay").innerHTML="Current position: "+slideDataNumber;
         document.getElementById("messageDisplay").innerHTML="";
@@ -40,14 +46,16 @@
                     buttonName.style.width=100;
                     buttonName.style.margin=5;
                     buttonDisplay.appendChild(buttonName); 
-        }
+        };
 
-    }
+    };
     function buttonClick(event){ 
                 var index=event.srcElement.id;
                 console.log(index);
                 document.querySelector("#messageDisplay").innerHTML=index+"Clicked";
-            }
+            };
+    }
+        )();
 </script>
 </body>
 </html>

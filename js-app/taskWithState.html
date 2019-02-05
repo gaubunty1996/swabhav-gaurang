@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+
+<head>
+        <title>Rough Task With State</title>
+</head>
+
+<body>
+
+        <div class="small-container">
+                <h1>TO do list</h1>
+
+                <form>
+                       Enter : <input id="item" type="text" placeholder="Enter something to do">
+                </form>
+
+                <h2>Items</h2>
+                <ul></ul>
+
+                <button>Clear All</button>
+        </div>
+
+        <script>
+                const form = document.querySelector('form');
+                const ul = document.querySelector('ul');
+                const button = document.querySelector('button');
+                const input = document.getElementById('item');
+
+                console.log(input);
+
+                let itemsArray = localStorage.getItem('items') ? JSON.parse(localStorage.getItem('items')) : [];
+                console.log(itemsArray);
+
+                localStorage.setItem('items', JSON.stringify(itemsArray));
+                const data = JSON.parse(localStorage.getItem('items'));
+                console.log("data : "+data)
+
+                const listMaker = function(text) {
+                        console.log("listMaker called")
+                        const li = document.createElement('li');
+                        li.textContent = text;
+                        ul.appendChild(li);
+                }
+
+                form.addEventListener('submit', function (e) {
+                        e.preventDefault();
+                        console.log("hello")
+                        console.log(input.value)
+                        if(input.value!="")
+                        {
+                        itemsArray.push(input.value);
+                        localStorage.setItem('items', JSON.stringify(itemsArray));
+                        console.log("calling limaker");
+                        listMaker(input.value);
+                        input.value = "";
+                        }
+                });
+
+                data.forEach(
+                        function(item) {
+                        listMaker(item);
+                });
+
+                button.addEventListener('click', function () {
+                        localStorage.clear();
+                        while (ul.firstChild) {
+                                ul.removeChild(ul.firstChild);
+                        }
+                        itemsArray = [];
+                });
+                
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Task With State</title>
+</head>
+
+<body>
+    Enter Name:
+    <input type="text" name="message" id="Name" placeholder="Write something">
+    <input type="button" value="ADD" id="Add">
+    <span id="alert" style="color:red"></span>
+    <p id="append">
+
+        <ul id="list">
+
+        </ul>
+    </p>
+
+    <script>
+        var list = [];
+        var counter = 0;
+        var count = 0;
+        var button1 = document.getElementById("Add");
+        button1.addEventListener("click", add);
+        function add() {
+            var item = document.getElementById("Name").value;
+            if (!validate(item)) {
+                list[counter] = item;
+                storeInLocalStorage(list);
+                display(item);
+                counter++;
+            }
+        }
+        function validate(item) {
+            if (item == "") {
+                document.getElementById("alert").innerHTML = "please Enter Name";
+                return true;
+            }
+            return false;
+        }
+        function display(item) {
+            var ul = document.getElementById("list")
+            var li = document.createElement("li")
+            document.getElementById("alert").innerHTML = "";
+            li.appendChild(document.createTextNode("" + item))
+            li.setAttribute("id",counter)
+            ul.appendChild(li);
+            document.getElementById("Name").value = "";
+        }
+        function storeInLocalStorage(list) {
+            localStorage.setItem("itemList", JSON.stringify(list));
+        }
+        function retriveData() {
+            var list = JSON.parse(localStorage.getItem("itemList"));
+            console.log(list)
+            if (list != null) {
+                for (var i = 0; i < list.length; i++) {
+                    restoredata(list[i]);
+                }
+            }
+        }
+        function reload() {
+            if (count == 0) {
+                count++;
+                retriveData();
+            }
+        }
+        function restoredata(item) {
+            list[counter] = item;
+            storeInLocalStorage(list);
+            display(item);
+            counter++;
+        }
+        reload();
+    </script>
+</body>
+
+</html>

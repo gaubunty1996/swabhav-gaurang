@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+    <script>
+
+        function Employee(fname, lname) {
+            var firstName, secondName, fullName;
+            this.firstName = fname;
+            this.secondName = lname;
+            this.fullName = fname + lname;
+
+        }
+        var e1 = new Employee("Jaaie", "kadam");
+        console.log(e1);
+        console.log(e1.firstName);
+        console.log(e1.secondName);
+        console.log(e1.fullName);
+
+    </script>
+    <script>
+        console.log("student class");
+        function Student() {
+            var _fname, _lname;
+            this.setFirstName = function (fname) {
+                if (fname.length > 0) {
+                    _fname = fname;
+                }
+            }
+            this.setLastName = function (lname) {
+                if (lname.length > 0) {
+                    _lname = lname;
+                }
+            }
+            this.returnFullName = function () {
+                return _fname + " " + _lname;
+            }
+        }
+        var s1 = new Student();
+        console.log(s1);
+        s1.setFirstName("Gaurang");
+        s1.setLastName("Kadam")
+        console.log(s1.returnFullName());
+    </script>
+
+</body>
+
+</html>

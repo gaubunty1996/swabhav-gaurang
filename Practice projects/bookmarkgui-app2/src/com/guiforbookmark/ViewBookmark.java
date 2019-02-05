@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class ViewBookmark implements ActionListener {
 	private BookmarkGui viewbookmarkgui;
@@ -19,6 +20,11 @@ public class ViewBookmark implements ActionListener {
 	private ArrayList<String> listOfStrings = new ArrayList<>();
 	private ArrayList<JLabel> listOfStringsOfJlabel = new ArrayList<JLabel>();
 	private ArrayList<String> StringsOfJlabel = new ArrayList<String>();
+	private JPanel panel = new JPanel(); 
+	
+	public JPanel getPanel() {
+		return panel;
+	}
 
 	public ArrayList<String> getStringsOfJlabel() {
 		return StringsOfJlabel;
@@ -47,6 +53,7 @@ public class ViewBookmark implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+	
 		JLabel newLabel = viewbookmarkgui.getEmptyScreen();
 
 		File file = new File(fileName);
@@ -67,24 +74,27 @@ public class ViewBookmark implements ActionListener {
 		}
 		listOfStrings.remove(0);
 		System.out.println(listOfStrings);
-
+		
 		for (int i = 0; i < listOfStrings.size(); i++) {
 			JLabel extraLabel = new JLabel();
+			
 			extraLabel.setBackground(Color.WHITE);
 			extraLabel.setText("<HTML>" + listOfStrings.get(i) + "<HTML>");
-			// extraLabel.addMouseListener(new OpenTheLinks(this));
+			
 			listOfStringsOfJlabel.add(extraLabel);
 			StringsOfJlabel.add(extraLabel.getText());
 			viewbookmarkgui.getViewBookmarksPanel().add(extraLabel);
-			viewbookmarkgui.getViewBookmarksPanel().validate();
-			viewbookmarkgui.getViewBookmarksPanel().repaint();
+			panel=viewbookmarkgui.getViewBookmarksPanel();
+			panel.revalidate();
+			panel.repaint();
+			viewbookmarkgui.setViewBookmarksPanel(panel);
+			//viewbookmarkgui.getViewBookmarksPanel().revalidate();
+			//viewbookmarkgui.getViewBookmarksPanel().repaint();
 			// System.out.println("Added: ");
 		}
-		viewbookmarkgui.getViewBookmarksPanel().revalidate();
-		viewbookmarkgui.getViewBookmarksPanel().repaint();
 		for (int i = 0; i < listOfStringsOfJlabel.size(); i++) {
 			listOfStringsOfJlabel.get(i).addMouseListener(new OpenTheLinks(this));
 		}
-
+		
 	}
 }

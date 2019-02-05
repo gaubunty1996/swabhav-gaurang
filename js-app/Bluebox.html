@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="Bluebox.css" />
+</head>
+
+<body>
+
+    <input type="button" value="Start" id="start">
+    <input type="button" value="Reset" id="replay">
+    <div id="buttons"> </div>
+    <div id="hintDisplay"> </div>
+
+
+    <script>
+
+        (
+            function () {
+                var rightGuessIndex = Math.floor(Math.random() * 50);
+                var startButton = document.getElementById("start");
+                var buttonDisplay = document.querySelector("#buttons");
+                var hintDisplay = document.getElementById("hintDisplay");
+                console.log(rightGuessIndex);
+                function displayButtons() {
+                    startButton.disabled = true;
+                    for (buttonId = 1; buttonId <= 50; buttonId++) {
+                        var button = document.createElement("BUTTON");
+                        button.setAttribute("id", buttonId);
+                        button.addEventListener('click', buttonClick);
+                        button.innerHTML = buttonId;
+                        button.style.height = 35;
+                        button.style.width = 35;
+                        button.style.margin = "20px", "20px";
+                        button.style.paddingLeft = "20px";
+                        button.style.paddingRight = "20px";
+                        buttonDisplay.appendChild(button);
+                    }
+                }
+                var count = 0;
+                function buttonClick(event) {
+                    var button = event.srcElement;
+                    var buttonId = event.srcElement.id;
+
+                    if (count < 5) {
+                        if (buttonId > rightGuessIndex) {
+                            button.style.backgroundColor = 'green';
+                            button.disabled = true;
+                            count++;
+                        }
+
+                        if (buttonId < rightGuessIndex) {
+                            button.style.backgroundColor = 'red';
+                            button.disabled = true;
+                            count++;
+                        }
+                        if (buttonId == rightGuessIndex) {
+                            button.style.backgroundColor = 'blue';
+                            hintDisplay.innerHTML = " Number Guessed, congragulatioins!";
+                            count++;
+                            //$(':button').prop('disabled', true);
+                            disabledbuttons();
+
+                        }
+                    }
+                    else {
+                        // $(':button').prop('disabled', true);
+                        disabledbuttons();
+                        var reply = prompt("do you want to play again");
+                        if (reply == "y") {
+                            location.reload();
+
+                        }
+                        else { reply == "n" } {
+                            alert("Thanx for playing");
+                        }
+                    }
+                }
+
+                function disabledbuttons() {
+                    for (var i = 1; i < 50; i++) {
+                        document.getElementById(i).disabled = true;
+                    }
+                    hintDisplay.innerHTML = "Game over";
+
+                }
+                startbutton = document.getElementById("start");
+                startbutton.addEventListener("click", displayButtons);
+
+                replaybutton = document.getElementById("replay");
+                replaybutton.addEventListener("click", function () {
+                    location.reload();
+                });
+            }       //console.log(buttonId);
+        )();
+    </script>
+</body>
+
+</html>

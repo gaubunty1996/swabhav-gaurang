@@ -35,6 +35,8 @@ public class AddBookmark implements ActionListener {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		addbookmarkgui.validate();
+		addbookmarkgui.repaint();
 		
 		
 	}

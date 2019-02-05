@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Quetion Bank</title>
+</head>
+
+<body>
+    <p id="time"></p>
+    <div id="ruleWindow">
+        <h1>Rules</h1>
+        <ul>
+            <li>Test contains 5 questions.</li>
+            <li>Choose the correct option of given Question.</li>
+            <li>For pass the test 60% required.</li>
+        </ul>
+
+        <input type="button" id="startButton" value="Start">
+    </div>
+    <script>
+        (
+            function(){
+        var questions = [
+            {
+                "id": 1,
+                "content": "Largest Continent on Planet",
+                "option": ["Africa", "Asia", "North America", "South America"],
+                "answer": "option[1]"
+            },
+            {
+                "id": 2,
+                "content": "Smallest Continent on Planet",
+                "option": ["Africa", "Europe", "Australia", "South America"],
+                "answer": "option[2]"
+            },
+            {
+                "id": 3,
+                "content": "Largest river on Planet",
+                "option": ["Amazon", "Ganga", "Indus", "Nile"],
+                "answer": "option[3]"
+            },
+            {
+                "id": 4,
+                "content": "Biggest country on Planet by Area",
+                "option": ["China", "USA", "Russia", "India"],
+                "answer": "option[2]"
+            },
+            {
+                "id": 5,
+                "content": "Biggest country on Planet by polpulation",
+                "option": ["China", "India", "USA", "Russia"],
+                "answer": "option[0]"
+            },
+            {
+                "id": 6,
+                "content": "Capital of India",
+                "option": ["Mumbai", "Chennai", "Kolkata", "New Delhi"],
+                "answer": "option[3]"
+            },
+            {
+                "id": 7,
+                "content": "Largest ocean on Planet",
+                "option": ["Pacific", "Indian", "Atlantic", "Arctic"],
+                "answer": "option[0]"
+            },
+            {
+                "id": 8,
+                "content": "Highest Mountain on Planet",
+                "option": ["Mt. Kanchenjonga", "Mt. Everest", "Mt.GodwinAustin", "Mt.CaperHorn"],
+                "answer": "option[2]",
+            },
+            {
+                "id": 9,
+                "content": "Largest dry Desert on Planet",
+                "option": ["Thar", "Atacama", "Great Australian desert", "Sahara"],
+                "answer": "option[3]"
+            },
+            {
+                "id": 10,
+                "content": "Largest military expenditure by Country",
+                "option": ["USA", "India", "China", "Russia"],
+                "answer": "option[0]"
+            }
+        ];
+
+        var mainWindow = document.querySelector("#ruleWindow");
+        var correctCount = 0;
+        var seconds = 0;
+
+        function onStart() {
+
+            startTest();
+        }
+        var num = [];
+        var index = 0;
+        var question = Math.floor(Math.random() * 3);
+        function startTest() {
+            mainWindow.innerHTML = "";
+            createView(questions[question]);
+        }
+
+        function createView(question) {
+            index++;
+            var labelID = document.createElement("Label");
+            var labelQuestion = document.createElement("Label");
+            var form = document.createElement("form");
+            form.setAttribute("id", "form");
+            for (var i = 0; i < question.option.length; i++) {
+                var radio = document.createElement("input");
+                radio.autofocus = true;
+                var radioLabel = document.createElement("label");
+                radio.type = "radio";
+                radio.name = "option";
+                radio.addEventListener("click", check);
+                radio.setAttribute("id", "option[" + i + "]");
+                radio.setAttribute("value", question.answer);
+                radioLabel.innerHTML = question.option[i];
+
+                form.appendChild(radio);
+                form.appendChild(radioLabel);
+            }
+            var nextButton = document.createElement("button");
+            labelID.innerHTML = index + ".";
+            labelQuestion.innerHTML = question.content;
+            labelQuestion.style.marginLeft = 150;
+            nextButton.innerHTML = "Next";
+            nextButton.addEventListener("click", next);
+            mainWindow.appendChild(labelID);
+            mainWindow.appendChild(labelQuestion);
+            mainWindow.appendChild(form);
+            mainWindow.appendChild(nextButton);
+        }
+        function check(event) {
+            if (event.srcElement.id == event.srcElement.value) {
+                correctCount++;
+            }
+        }
+        function next() {
+            mainWindow.innerHTML = "";
+            if (index < 5) {
+                createView(questions[question + index]);
+            } else {
+                result();
+            }
+        }
+        function result() {
+            var displayResult = document.createElement("label");
+            console.log(correctCount);
+            var percent = correctCount / 5 * 100;
+            var resultMain = "failed";
+            if (percent >= 60) {
+                resultMain = "pass";
+            }
+            var resultMsg1 = correctCount + " Out of 5 correct an take " + seconds + "seconds\n <h3>Percentage is " + percent + "\n Result " + resultMain;
+            displayResult.innerHTML = resultMsg1;
+            mainWindow.appendChild(displayResult);
+        }
+        var startButton = document.getElementById("startButton").addEventListener("click", onStart)
+        }
+        )();
+
+    </script>
+</body>
+
+</html>

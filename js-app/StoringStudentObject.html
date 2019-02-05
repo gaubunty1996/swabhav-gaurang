@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Collection</title>
+</head>
+
+<body>
+
+    <script>
+        var s1 = {};
+        s1.firstName = "xyz";
+        s1.lastName = "abc";
+        s1.age = 12;
+
+
+        localStorage.clear();
+        localStorage.setItem("s1", JSON.stringify(s1)); //storing object 
+        console.log(localStorage.getItem("s1"));
+
+        var user = JSON.parse(localStorage.getItem('s1'));//retriving object
+        console.log(user.firstName);
+    </script>
+</body>
+
+</html>

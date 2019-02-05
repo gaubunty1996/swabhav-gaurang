@@ -43,6 +43,7 @@ public class BookmarkGui extends JFrame {
 
 	public void setViewBookmarksPanel(JPanel viewBookmarksPanel) {
 		this.viewBookmarksPanel = viewBookmarksPanel;
+		
 	}
 
 	public Container getContainer() {
@@ -131,7 +132,7 @@ public class BookmarkGui extends JFrame {
 		//viewBookmarksPanel.add(emptyScreen,0);
 		
 		viewBookmarksPanel.setOpaque(true);
-		viewBookmarksPanel.setBackground(Color.WHITE);
+		viewBookmarksPanel.setBackground(Color.LIGHT_GRAY);
 		viewBookmarksPanel.setLayout(new GridLayout(viewBookmark.getListOfStrings().size(),1));
 		container.add(domainNameLabel);
 		container.add(addDomian);
@@ -141,14 +142,19 @@ public class BookmarkGui extends JFrame {
 		container.add(viewButton);
 		container.add(viewBookmarksPanel);
 		
-		setSize(2000, 2000);
-		setLayout(null);
-		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addButton.addActionListener(new AddBookmark(this));
 		viewButton.addActionListener(new ViewBookmark(this));
-		viewBookmarksPanel.validate();
+		
+		viewBookmarksPanel.revalidate();
 		viewBookmarksPanel.repaint();
+		container.revalidate();
+		container.repaint();
+		setSize(2000, 2000);
+		setLayout(null);
+		setVisible(true);
+		
+		
 	}
 
 }
