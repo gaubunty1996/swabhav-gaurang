@@ -1,0 +1,30 @@
+<html>
+
+<body>
+
+    <h2>XMLHttpRequest example</h2>
+
+    <div id="demo">
+        <button type="button" id="button" >Change Content</button>
+    </div>
+
+    <script>
+        clickButton=document.getElementById("button").addEventListener("click",loadDoc)
+        function loadDoc() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("demo").innerHTML =
+                        this.responseText;
+                }
+            };
+            xhttp.open("GET", "xml.txt", true);
+            xhttp.send();
+        }
+
+
+    </script>
+
+</body>
+
+</html>
