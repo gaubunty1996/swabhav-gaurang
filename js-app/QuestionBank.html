@@ -85,7 +85,7 @@
 
         var mainWindow = document.querySelector("#ruleWindow");
         var correctCount = 0;
-        var seconds = 0;
+        //var seconds = 0;
 
         function onStart() {
 
@@ -151,7 +151,7 @@
             if (percent >= 60) {
                 resultMain = "pass";
             }
-            var resultMsg1 = correctCount + " Out of 5 correct an take " + seconds + "seconds\n <h3>Percentage is " + percent + "\n Result " + resultMain;
+            var resultMsg1 = correctCount + " Out of 5 correct"<h3>"Percentage is " + percent + "\n Result " + resultMain;
             displayResult.innerHTML = resultMsg1;
             mainWindow.appendChild(displayResult);
         }

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <input type ="number" id="text" placeholder="Enter a Number">
+        <input type="button" value="Show Info" id="button">
+        <input type="button" value="search result" id="historybutton">
+    </div>
+    <div id ="demo"></div>
+    <ul id="unorderdlist">
+
+    </ul>
+    
+    <script>
+        "use strict";
+        var searchhistorybutton = document.getElementById("historybutton").addEventListener("click",function(){
+            numberApiService().getEachObjectFromStorage();
+        })
+        var button = document.getElementById("button").addEventListener("click",function(){
+                numberApiService().getFactFor(document.getElementById("text").value,function(r){
+                document.getElementById("demo").innerHTML = r ;
+            })
+        }); 
+        
+        var numberApiService = function(){
+            var service = {};   
+            var numberList = [];
+
+            service.retriveData = function(){
+                if(JSON.parse(localStorage.getItem("numberList")) == null ){
+                    numberList = [];
+                }else{
+                    numberList =  JSON.parse(localStorage.getItem("numberList"));
+                }
+                    
+            }
+
+            service.addToLocalStorage = function(){
+                localStorage.setItem("numberList",JSON.stringify(numberList));
+            }
+
+            service.getObject = function(number,String){
+                var numberObject = {
+                    data:number,
+                    response:String
+                }
+                service.retriveData();
+                numberList.push(numberObject);
+                service.addToLocalStorage();
+            }
+            service.getEachObjectFromStorage=function(){
+                service.retriveData();
+                document.getElementById("unorderdlist").innerHTML="";
+                for (var i=0;i<numberList.length;i++){
+                    service.display(numberList[i]);
+                }
+            }
+            service.display=function(listobj){
+                var ul = document.getElementById("unorderdlist");
+                var div = document.createElement("DIV");
+                var li = document.createElement("LI");
+                li.appendChild(document.createTextNode(" " + listobj.response));
+                ul.appendChild(li);
+            }
+
+            service.getFactFor = function(number,callback) {
+                if( number == ""){
+                    return;
+                }else{
+                    
+                    setTimeout(function(){
+                        var string = "http://numbersapi.com/"+number;
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            callback (this.responseText);
+                            service.getObject(number,this.responseText);
+                            }
+                        };
+                        xhttp.open("GET",string, true);
+                        xhttp.send();
+                    },0); 
+                }  
+            }
+            return service;
+        };
+        console.log("End of Script");
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="jquery-3.3.1.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="jquery.csv.js"></script>
+</head>
+
+<body>
+    <div class="col-md-8">
+
+        <input class="btn btn-primary" type="submit" id="submit" value="Click this button to fetch employee records" />
+    </div>
+    <script>
+        $('#submit').on('click', function () {
+            $.ajax({
+                url: " data.txt ",
+                type: "get",
+                success: function (data) {
+                    var result = $.csv.toArrays(data);
+                    console.log(result);
+                    document.write("<table>");
+                    document.write(`<th>EmployeeId</th>
+                    <th>Employee name</th> <th>Employee designation</th> <th>Manager id</th><th> Date of joining</th> 
+                    <th>Salary</th> <th>Commission</th> <th>Department number</th>
+                                    `);
+                    for (var i = 0; i < result.length; i++) {
+                        document.write("<tr>");
+                        var row = result[i];
+                        console.log(result[i]);
+                        for (var j = 0; j < row.length; j++) {
+                            console.log(result[j]);
+                            document.write(`<td>${row[j]}</td>`);
+                        }
+                        document.write("</tr>");
+                    }
+                    document.write("</table>");
+                },
+                error: function (error) {
+                    console.log("error occured");
+                    console.log(error);
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

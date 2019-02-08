@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+</head>
+<body>
+    <script>
+        
+            
+
+        var empservice=function (){
+            var obj={};
+            var _fname,_lname;
+            obj.setFirstName=function(firstname){
+                if(firstname.length>0){
+                    _fname=firstname;
+                }
+            }
+            obj.setLastName= function(lastname){
+                if(lastname.length>0){
+                    _lname=lastname;
+                }
+            }
+            obj.getFullName=function(){
+                return _fname+" "+_lname;
+            }
+            return obj;
+        }();
+    
+       
+        empservice.setFirstName("sachin");
+        empservice.setLastName("tendulkar");
+        console.log(empservice.getFullName());
+        console.log(empservice)
+        </script>
+</body>
+</html>

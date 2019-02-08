@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Employee Data</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="jquery-3.3.1.js"></script>
+    <script src="js/bootstrap.js"> </script>
+    <script src="jquery.csv.js"></script>
+</head>
+
+<body class="container">
+    <br>
+    <button id="button" class="btn btn-primary">See data</button><br>
+    <div id="table" style="margin-top: 20px"></div>
+
+    <div id="loading">
+        <img id="loading-image" src="giphy.gif" alt="Loading..." />
+    </div>
+
+    <script>
+        $('#button').on('click', function () {
+            $("#loading-image").show();
+            $.ajax({
+                url: 'http://localhost/bootstrap-app/data.txt',
+                type: 'get',
+                success: function (data) {
+                    setTimeout(function () {
+                     createTable(data);
+                        $('#loading-image').hide();
+                    }, 2000)
+                }, error: function () {
+                    $('#loading-image').hide();
+                    $("#table").html("Network error")
+                }
+            })
+        })
+        function createTable(data) {
+            var result = $.csv.toArrays(data);
+            var string;
+            string = "<table class='table table-striped'>";
+            string += "<th>EmployeeId</th><th>Employee name</th> <th>Employee designation</th> <th>Manager id</th><th> Date of joining</th><th>Salary</th> <th>Commission</th> <th>Department number</th>";
+            for (var i = 0; i < result.length; i++) {
+
+                string += "<tr>";
+                var row = result[i];
+                for (var j = 0; j < row.length; j++) {
+
+                    string += `<td>${row[j]}</td>`;
+                }
+
+                string += "</tr>";
+
+            }
+            string += "</table>";
+            string = string.replace(/'/g, " ");
+            $("#table").html(string);
+            console.log(string);
+        }
+        $(document).ready(function () {
+            $('#loading-image').hide();
+        });
+    </script>
+</body>
+
+</html>

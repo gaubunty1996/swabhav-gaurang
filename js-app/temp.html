@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Task With State</title>
+    <script src="moment.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    Enter Task:
+    <input type="text" name="message" id="Name" placeholder="Write">
+    <input type="button" value="ADD" id="Add">
+    <!-- <input type="button" value="ArchiveData" id="Archive"> -->
+    <span id="alert" style="color:red"></span>
+    <div id="mainTask">
+
+    </div>
+
+    <script>
+        var list = [];
+        var archiveList = [];
+        var counter = 0;
+        var count = 0;
+        var button1 = document.getElementById("Add");
+        button1.addEventListener("click", add);
+        // var button2 = document.getElementById("Archive");
+        // button2.addEventListener("click", archiveDisplay);
+        function add() {
+            var item = document.getElementById("Name").value;
+            var date = Date();
+            var data = {};
+            data.text = item;
+            data.date = date;
+            data.isCompleted = false;
+            data.isDeleted = false;
+            if (!validate(item)) {
+                list.push(data);
+                storeInLocalStorage(list);
+                display(list, counter);
+                counter++;
+            }
+        }
+        function validate(item) {
+            if (item == "") {
+                document.getElementById("alert").innerHTML = "please Enter Task";
+                return true;
+            }
+            return false;
+        }
+        function display(itemList, number) {
+            var div = document.createElement("div");
+            var label = document.createElement("LABEL");
+            var checkBox = document.createElement("input");
+            checkBox.type = "checkbox";
+            var button = document.createElement("BUTTON");
+            var time = document.createElement("span");
+            time.innerHTML = moment(itemList[number].date).fromNow();
+            label.innerHTML = itemList[number].text;
+            checkBox.checked = itemList[number].isCompleted;
+            button.innerHTML = "X";
+            checkBox.setAttribute("id", "CheckBox" + number);
+            button.setAttribute("id", "Button" + number);
+            label.setAttribute("id", "Label" + number);
+            div.setAttribute("id", +number);
+            checkBox.addEventListener("click", markTask);
+            button.addEventListener("click", removeTask);
+            mainTask.appendChild(div);
+            div.appendChild(label);
+            div.appendChild(checkBox);
+            div.appendChild(button);
+            div.appendChild(time);
+        }
+        function storeInLocalStorage(list) {
+            localStorage.setItem("itemList", JSON.stringify(list));
+        }
+        function storeRetriveData(data) {
+            var obj = JSON.parse(localStorage.getItem("retriveList"));
+            if (obj != null) {
+                for (var i = 0; i < obj.length; i++) {
+                    archiveList.push(obj[i]);
+                }
+            }
+            archiveList.push(data);
+            localStorage.setItem("retriveList", JSON.stringify(archiveList));
+        }
+        function retriveData() {
+            var rList = JSON.parse(localStorage.getItem("itemList"));
+            console.log(rList)
+            if (rList != null) {
+                for (var i = 0; i < rList.length; i++) {
+                    restoredata(rList, i);
+                }
+            }
+        }
+        function reload() {
+            count = 0;
+            if (count == 0) {
+                count++;
+                retriveData();
+            }
+        }
+        function restoredata(iList, number) {
+            list[counter] = iList[number];
+            storeInLocalStorage(list);
+            display(iList, number);
+            counter++;
+        }
+        reload();
+        function markTask(event) {
+            var child = event.srcElement.id;
+            var msg = document.getElementById(child).parentNode.firstChild.innerHTML;
+            var keyIndex = document.getElementById(child).parentNode.id;
+            var mark = event.srcElement.checked;
+            if (mark == true) {
+                list[keyIndex].text = msg.strike();
+                list[keyIndex].isCompleted = true;
+            } else if (mark == false) {
+                list[keyIndex].text = msg.slice(8, -9);
+                list[keyIndex].isCompleted = false;
+            }
+            storeInLocalStorage(list);
+            location.reload();
+        }
+        function removeTask(event) {
+            var childId = event.srcElement.id;
+            var msg = document.getElementById(childId).parentNode.id;
+            console.log(msg)
+            list[msg].isDeleted = true;
+            storeRetriveData(list[msg]);
+            list.splice(msg, 1);
+            storeInLocalStorage(list);
+            location.reload();
+        }
+    </script>
+</body>
+
+</html>

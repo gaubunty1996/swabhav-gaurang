@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+    <div>
+        <input type="number" placeholder=" " id="textfield">
+        <input type="button" value="print" id="but">
+    </div>
+    <div id="demo">
+
+    </div>
+    <script>
+
+        var submitbutton = document.getElementById("but").addEventListener("click", display);
+        function display() {
+            var userinput = document.getElementById("textfield").value;
+            console.log(userinput);
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("demo").innerHTML =
+                        this.responseText;
+                        console.log("http://numbersapi.com/#"+userinput);
+                }
+                
+            };
+
+            xhttp.open("GET", "http://numbersapi.com/"+userinput, true);
+            xhttp.send();
+        }
+    </script>
+</body>
+
+</html>

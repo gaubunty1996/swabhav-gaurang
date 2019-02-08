@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Task With State</title>
+    <script src="moment.js"></script>
+</head>
+
+<body>
+    Enter Name:
+    <input type="text" name="message" id="Name" placeholder="Write something">
+    <input type="button" value="ADD" id="Add">
+    <span id="alert" style="color:red"></span>
+    <div id="maintag">
+
+    </div>
+
+    <script>
+        var list = [];
+        var counter = 0;
+        var count = 0;
+        var archived = [];
+        var maintag = document.getElementById("maintag");
+        var button1 = document.getElementById("Add");
+        button1.addEventListener("click", add);
+        function add() {
+
+            var item = document.getElementById("Name").value;
+            var date = Date();
+            var data = {}
+            data.text = item;
+            data.date = date;
+            data.isCompleted = false;
+            data.isDeleted = false;
+            if (!validate(item)) {
+                list.push(data);
+                storeInLocalStorage(list);
+                display(list, counter);
+                counter++;
+            }
+        }
+        function validate(item) {
+            if (item == "") {
+                document.getElementById("alert").innerHTML = "please Enter Name";
+                return true;
+            }
+            return false;
+        }
+        function display(list, counter) {
+            var div = document.createElement("DIV");
+            var label = document.createElement("LABEL")
+
+           // var time = moment().fromNow();
+            var timelabel = document.createElement("Label");
+            timelabel.innerHTML = moment(list[counter].date).fromNow();
+
+            label.innerHTML = list[counter].text;
+            label.addEventListener("click", striked);
+            label.setAttribute("id", counter);
+            var crossbutton = document.createElement("BUTTON")
+            crossbutton.setAttribute("id",counter);
+            crossbutton.innerHTML = " &times; ";
+            crossbutton.addEventListener("click", remove)
+
+
+            maintag.appendChild(div);
+            div.appendChild(label)
+
+            div.appendChild(crossbutton);
+            div.appendChild(timelabel)
+
+        }
+        function striked(event) {
+
+            var strikedelementid = event.srcElement.id;
+            var mark=event.srcElement.checked;
+            var trueorfalse =list[event.srcElement.id].isCompleted;
+            console.log(trueorfalse)
+            if(trueorfalse){
+                list[strikedelementid].isCompleted = false;
+                console.log(list[strikedelementid].isCompleted)
+                localStorage.setItem("itemList", JSON.stringify(list))
+            }
+            else{
+                list[strikedelementid].text = list[strikedelementid].text.strike()
+                list[strikedelementid].isCompleted = true;
+                console.log(list[strikedelementid].isCompleted)
+                localStorage.setItem("itemList", JSON.stringify(list))
+            
+            }
+
+            location.reload();
+
+        }
+        function remove(event) {
+            var node = event.srcElement.id;
+            console.log(node)
+            var deletenode = document.getElementById(node).parentNode.id;
+            console.log(node)
+            console.log(list[deletenode])
+            //archived.push(list[node])
+            console.log(typeof archived);
+            storeOnArchive(list[node]);
+            list.splice(deletenode, 1);
+            storeInLocalStorage(list);
+            
+
+            location.reload();
+        }
+        function storeOnArchive(data){
+            localStorage.setItem("archivedlist",JSON.stringify(archived));
+
+            var obj = JSON.parse(localStorage.getItem("archivedlist"));
+            if (obj != null) {
+                for (var i = 0; i < obj.length; i++) {
+                    archived.push(obj[i]);
+                }
+            }
+            archived.push(data);
+            localStorage.setItem("archivedlist", JSON.stringify(archived));
+
+        }
+
+        function storeInLocalStorage(list) {
+            localStorage.setItem("itemList", JSON.stringify(list));
+        }
+        function retriveData() {
+            var list = JSON.parse(localStorage.getItem("itemList"));
+            console.log(list)
+            if (list != null) {
+                for (var i = 0; i < list.length; i++) {
+                    restoredata(list, i);
+                }
+            }
+        }
+        function reload() {
+            if (count == 0) {
+                count++;
+                retriveData();
+            }
+        }
+        function restoredata(rlist, number) {
+            list[counter] = rlist[number];
+            storeInLocalStorage(list);
+            display(rlist, number);
+            counter++;
+        }
+        reload();
+    </script>
+</body>
+
+</html>

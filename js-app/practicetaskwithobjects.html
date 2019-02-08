@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    Enter Name:
+    <input type="text" name="message" id="Name" placeholder="Write something">
+    <input type="button" value="ADD" id="Add">
+    <span id="alert" style="color:red"></span>
+    <p id="append">
+
+        <ul id="list">
+
+        </ul>
+    </p>
+    <script>
+        
+        var counter=0;
+        var itemlist=[]
+        var archivelist=[]
+        var objectlist=[]
+
+        function additem(){
+            var inputtext = document.getElementById("Name").value;
+            if(inputtext!=""){
+                itemlist.push(inputtext);
+                localStorage.setItem("tasklist",itemlist);
+                objectlist.push({
+                    date: new Date(),
+                    description: inputtext,
+                    isCompleted: false,
+                    isDeleted: false,
+                    element: li
+
+                });
+            }
+        }
+        var addbutton=document.getElementById("Add").addEventListener("click",additem);
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
