@@ -172,11 +172,13 @@
                 string += "<td>" + "<input type='button' id='deleteButton' value='Delete' class='btn btn-danger'>" + "</td>";
                 string += "<td>" + "<input type='button' id='editButton' value='Edit' class='btn btn-primary'>" +
                     "<span  id='right' class='glyphicon glyphicon-ok btn btn-default ' style='color:green' aria-hidden='true'></span><span class='glyphicon" +
-                    " glyphicon-remove btn btn-default' id='cancel' style='color:red'  aria-hidden='true'></span></td>" + "</td>";
+                   " glyphicon-remove btn btn-default' id='cancel' style='color:red'  aria-hidden='true'></span></td>" + "</td>";
+                
                 
                 string += "</tr>";
             }
             string += "</table>";
+
             $("#printData").html(string);
         }
 
@@ -206,7 +208,7 @@
             $('#loading-image').show();
             var del_id = $(this).parent().siblings(":first").text();
             console.log(del_id);
-            this.style.visibility = "hidden";
+            //this.style.visibility = "hidden";
             
             //$('span').css('display', 'block');
             //$('#editButton').hide();
