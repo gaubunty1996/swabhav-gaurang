@@ -10,18 +10,7 @@
     <script src="jquery-3.3.1.js"></script>
     <script src="js/bootstrap.js"> </script>
     <script src="jquery.csv.js"></script>
-    <style>
-    span{
-        display: none;
-    }
-        #cancel {
-            display: none;
-        }
-
-        #right {
-            display: none;
-        }
-    </style>
+    
 </head>
 
 <body class="container" style="margin-top: 5px">
@@ -148,7 +137,7 @@
         function getData(data) {
             var result = data;
             var string;
-            string = "<h2>Student Data</h2><table class='table table-hover'>";
+            string = "<h2>Student Database</h2><table class='table table-hover table-striped'>";
             string += "<th>Roll Number</th><th>Student name</th> <th>Age </th> <th>Date</th> <th>Email ID</th> <th>Gender</th> <th> Delete Data</th> <th> Edit Data</th>";
             for (var i = 0; i < result.length; i++) {
                 var rollNumber = result[i].rollNo;
@@ -170,11 +159,11 @@
                 string += "<td>" + email + "</td>";
                 string += "<td>" + gender + "</td>";
                 string += "<td>" + "<input type='button' id='deleteButton' value='Delete' class='btn btn-danger'>" + "</td>";
-                string += "<td>" + "<input type='button' id='editButton' value='Edit' class='btn btn-primary'>" +
-                    "<span  id='right' class='glyphicon glyphicon-ok btn btn-default ' style='color:green' aria-hidden='true'></span><span class='glyphicon" +
-                   " glyphicon-remove btn btn-default' id='cancel' style='color:red'  aria-hidden='true'></span></td>" + "</td>";
-                
-                
+                string += "<td>" + "<input type='button' id='edit' value='Edit' class='edit'>" +
+                    "<span id='right' class='glyphicon glyphicon-ok btn disabled' aria-hidden='true' style='color:green'></span><span class='glyphicon" +
+                    " glyphicon-remove btn disabled' id='cancel' style='color:red'  aria-hidden='true'></span></td>" + "</td>";
+
+
                 string += "</tr>";
             }
             string += "</table>";
@@ -186,9 +175,9 @@
             var ans = confirm("Do You Want To DELETE")
             if (ans) {
                 console.log($(this).parent().siblings(":first").text());
-                var del_id = $(this).parent().siblings(":first").text();
+                var numberref = $(this).parent().siblings(":first").text();
                 $.ajax({
-                    url: "http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/" + del_id,
+                    url: "http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/" + numberref,
                     type: "DELETE",
                     success: function (status) {
                         alert(status + "Data erased");
@@ -204,19 +193,20 @@
             };
         }));
 
-        $(document).on('click', '#editButton', (function () {
+        $(document).on('click', '#edit', (function () {
+            var $editBtn = $(this);
             $('#loading-image').show();
-            var del_id = $(this).parent().siblings(":first").text();
-            console.log(del_id);
+            var numberref = $(this).parent().siblings(":first").text();
+            console.log(numberref);
             //this.style.visibility = "hidden";
-            
+
             //$('span').css('display', 'block');
             //$('#editButton').hide();
-            $('#cancel').css('display', 'block');
-            $('#right').css('display', 'block');
+            //$('#cancel').css('display', 'block');
+            //$('#right').css('display', 'block');
 
             $.ajax({
-                url: 'http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/' + del_id,
+                url: 'http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/' + numberref,
                 type: 'get',
                 success: function (data) {
                     console.log(data.isMale)
@@ -226,29 +216,52 @@
                     $("#inputAge").val(data.age);
                     $("#inputEmail").val(data.email);
                     $("#inputDate").val(data.date);
-
-                    $(document).on('click', '#right', (function () {
-                        console.log("hello");
-                        add();
-                    }))
-                    $('#cancel').on('click', function () {
-                        console.log("clicked wroomg button")
-                        emptyTheFields();
-                    })
                     if (data.isMale) {
                         //$("#gender").val($(this).prop('checked',true))
                         $('input:radio[name=sex]')[1].checked = false;
                         $('input:radio[name=sex]')[0].checked = true;
-                        return;
+                        //return;
                     }
                     else {
                         //$("#gender").next().val($(this).prop('checked',true))
                         $('input:radio[name=sex]')[0].checked = false;
                         $('input:radio[name=sex]')[1].checked = true;
-                        return;
+                        //return;
                     }
+                    $(".glyphicon").addClass("disabled");
 
-
+                    $editBtn.siblings(":first").removeClass("disabled");
+                    $(document).on('click', '#right', (function () {
+                        //console.log("hello");
+                        //add();
+                        var obj = {
+                            "rollNo": $("#inputRollNo").val(),
+                            "name": $("#inputName").val(),
+                            "age": $("#inputAge").val(),
+                            "email": $("#inputEmail").val(),
+                            "date": $("#inputDate").val(),
+                            "isMale": $('#gender').prop('checked')
+                        }
+                        console.log(obj)
+                        $.ajax({
+                            url: "http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/" + obj.rollNo,
+                            data: obj,
+                            type: 'PUT',
+                            success: function (data, status) {
+                                alert("data has been updated")
+                                emptyTheFields();
+                                DisplayData();
+                            },
+                            error: function () {
+                                console.log("error");
+                            }
+                        });
+                    }))
+                    $('#cancel').on('click', function () {
+                        alert("data updation canceled")
+                        console.log("clicked wroomg button")
+                        emptyTheFields();
+                    })
 
                 }, error: function () {
                     $('#loading-image').hide();
