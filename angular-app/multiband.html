@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Multi Binding</title>
+        <script src="angular.js"></script>
+</head>
+<body ng-app="multibind" ng-controller="bindcontrol">
+    <div>  
+                Enter Message    : <input type="text" ng-model="message"/><br><br>
+                Font Size        : <input type="number" ng-model="size"/><br><br>
+                Background Color : 
+                <select ng-model="bgColor" ng-options="color for color in colorsList"></select><br><br>
+                Text Color       : 
+                <select ng-model="textColor" ng-options="text for text in colorsList"></select><br><hr>
+                <br><br>
+    </div>
+
+    <textarea cols="150" rows="30" ng-style="{'background-color':bgColor , 'color':textColor, 'font-size':size+'px'}">{{message}}</textarea>
+
+    <script>
+        angular.module("multibind",[])
+                .controller("bindcontrol",($rootScope)=>{
+                    $rootScope.colorsList = ['red','blue','green','yellow'];
+                })
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="student">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="angular.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <section ng-controller="StudentController">
+        <button ng-click="onclicking()">Show</button>
+        <div ng-hide="hideParagraph">
+
+            <p>{{student.name}}</p>
+            <p>{{student.addres}}</p>
+            <p>{{student.cgpa}}</p>
+            <img width="10%" ng-src="{{student.picture}}" />
+        </div>
+    </section>
+
+    <script>
+        var myapp=angular.module('student', [])
+            myapp.controller('StudentController', function ($scope,$timeout) {
+                $scope.hideParagraph = true;
+                $timeout(function () {
+                    $scope.hideParagraph = false;
+                    $scope.student = {
+                        name: "gaurang",
+                        addres: "thane",
+                        cgpa: 5.88,
+                        picture: "2.png"
+                    }
+                }, 3000);
+               
+                }
+            );
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="swabhavTechlab">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="angular.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <section ng-controller="binding">
+        <p >{{employee.id}}</p>
+        <p >{{employee.name}}</p>
+        <p >{{employee.salary}}</p>
+
+        <p>ID : <input type="text" ng-model="employee.id"></p>
+        <p>Name : <input type="text" ng-model="employee.name"></p>
+        <p>Salary : <input type="text" ng-model="employee.salary"></p>
+    </section>
+    <section ng-controller="binding">
+        <p>ID :{{employee.id}}</p>
+        <p>Name :{{employee.name}}</p>
+        <p>Salery :{{employee.salary}}</p>
+    </section>
+    <script>
+        angular.module('swabhavTechlab',[])
+            .controller('binding',['$scope',function($scope){
+                $scope.employee = {
+                    id : 101,
+                    name : "gaurang",
+                    salary : 10000
+                }
+            }]);
+    </script>
+</body>
+</html>

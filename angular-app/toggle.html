@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="toggle">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <script src="angular.js"></script>
+</head>
+<body>
+        <section ng-controller="ToggleController">
+                <button ng-click="onclicking()">Toggle</button>
+                <div ng-hide="hideParagraph">
+                    <img width="50%" ng-src="{{toggleimage.picture}}" />
+                </div>
+            </section>
+    <script>
+         angular.module('toggle', []).
+         controller('ToggleController', function ($scope) {
+                $scope.hideParagraph = true;
+                $scope.onclicking = function () {
+                    $scope.toggleimage = {
+                        picture: "colourfulimage.gif"
+                    }
+                    if($scope.hideParagraph==true){
+                        $scope.hideParagraph = false;
+                    }
+                    else{
+                        $scope.hideParagraph = true;
+                    }
+                    
+                    
+                }
+            });
+
+        
+        </script>
+        
+</body>
+</html>

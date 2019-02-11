@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="moduleA">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="angular.js"></script>
+    <script src="moduleA.js"></script>
+   <script src="moduleB.js"></script>
+   <script src="moduleC.js"></script>
+   
+</head>
+<body>
+        <h1>{{company|uppercase}}</h1>
+        <section ng-controller='ControllerA' > 
+            <h1>
+                {{ControllerA.message}}
+            </h1>
+        </section>
+        
+        <section ng-controller='ControllerB' > 
+            <h1>
+                {{ControllerB.message}}
+            </h1>
+        </section>
+        
+        <section ng-controller='ControllerC' > 
+            <h1>
+                {{ControllerC.message}}
+            </h1>
+        </section>
+        <script></script>
+</body>
+</html>
