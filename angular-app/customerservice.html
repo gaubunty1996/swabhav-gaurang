@@ -20,14 +20,16 @@
     </section>
     <br>
     <hr>
-    <div ng-controller="secondController">
-        <p>Enter Number</p>
-        <input type="number" ng-model="oddNum" ng-click="showOdd($event)" ng-style="{'background-color':result2}">
-        <input type="button" value="ok"><br>
-      
-             {{result2}}
-       
-    </div>
+    <section ng-controller="secondController" ng-style="{'background-color':result2}">
+        <div >
+            <p>Enter Number</p>
+            <input type="number" ng-model="oddNum" ng-keypress="showOdd($event)" ng-style="{'background-color':result2}">
+            <input type="button" value="ok"><br>
+    
+        </div>
+    </section>
+    <br>
+   
 
     <script>
         angular.module("customService", [])
