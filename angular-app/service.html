@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html ng-app="Swabhav-techlabs">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="angular.js"></script>
+</head>
+
+<body>
+
+    <section ng-controller="firstController">
+        <label>
+            Enter Number
+        </label>
+        <input type="number" ng-init="number" ng-model="number">
+        <div ng-if="mathSrc.even(number)">
+            <section ng-style="{'background-color':color}">
+                <h1>Welcome</h1>
+                <p>Welcome to my home.</p>
+                <hr>
+        </div>
+    </section>
+
+    </section>
+
+    <section ng-controller="SecondController">
+        <label>
+            Enter Number
+        </label>
+        <input type="number" ng-model="number" >
+        <div ng-if="number%2==0">
+                <section ng-style="{'background-color':color}">
+                    <h1>Welcome</h1>
+                    <p>Welcome to my home.</p>
+                    
+            </div>
+    </section>
+
+    <script>
+        angular.module('Swabhav-techlabs', []).
+            factory('mathSrc', ['$log', '$rootScope', function ($log, $rootScope) {
+                $log.info($rootScope);
+                $log.info("Inside the service");
+                var service = {}
+                service.add = function (a, b) {
+                    return a + b;
+                }
+                service.even = function (a) {
+                    if (a % 2 == 0) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+
+                return service;
+            }
+            ])
+            .controller('firstController', ['$scope', 'mathSrc', function ($scope, mathSrc) {
+                // console.log(mathSrc.even(6));
+                // $scope.color="";
+                // // $scope.color=['red','green']
+                //$scope.number=9;
+                console.log(mathSrc.even($scope.number));
+                if (mathSrc.even($scope.number) == true) {
+                    $scope.color = 'Green';
+                }
+                else {
+                    $scope.color = 'Red';
+                }
+
+            }])
+            .controller('SecondController', ['$scope', 'mathSrc', function ($scope, mathSrc) {
+
+                // $scope.color = ['red', 'green']
+                $scope.color = "";
+                //$scope.number=10;
+                console.log(mathSrc.even($scope.number));
+                if (mathSrc.even($scope.number) == true) {
+                    $scope.color = 'Green';
+
+                }
+                else {
+                    $scope.color = 'Red';
+                }
+                console.log($scope.color)
+
+            }])
+
+    </script>
+</body>
+
+</html>
