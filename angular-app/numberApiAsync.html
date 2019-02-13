@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<script src="angular.js"></script>
+<body>
+
+<div ng-app="swabhav-app" ng-controller="myCtrl"> 
+<form novalidate>
+    <input ng-model="number">
+    <input type="submit" ng-click="submitForm(number)" value="Show data">
+</form>
+<p>{{number}}</p>
+<pre>{{data}}</pre>
+</div>
+
+<script>
+angular.module('swabhav-app', [])
+    .factory('numberApi',['$q','$http',function($q,$http){
+        var numberApiObj={};
+        numberApiObj.getData = function(number){
+            return $q(function (resolve,reject){
+                $http({
+                    method : "GET",
+                    url : "http://numbersapi.com/"+number                 
+                }).then(function(response){
+                    console.log(response);
+                    if(response.status == 200){
+                        resolve(response.data);
+                    }else{
+                        reject("Data can be fetched");
+                    }
+                })
+            })
+        }
+        return numberApiObj;
+    }])
+    .controller('myCtrl',['$scope','numberApi',function($scope,numberApi) {
+    $scope.number ;
+    $scope.submitForm = function(no){
+        var promise = numberApi.getData(no);
+        console.log(promise)
+        promise.then(function(response){
+            $scope.data = response;
+        })
+}}]);
+</script>
+
+</body>
+</html>

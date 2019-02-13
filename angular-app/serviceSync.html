@@ -11,25 +11,24 @@
 
 <body ng-app="customService">
     <section ng-controller="firstController" ng-style="{'background-color':result}">
-        <div >
+        <div>
             <p>Enter Number</p>
             <input type="number" ng-model="evenNum" ng-keypress="showEven($event)">
-            <input type="button" value="ok">
-    
+
         </div>
     </section>
     <br>
     <hr>
     <section ng-controller="secondController" ng-style="{'background-color':result2}">
-        <div >
+        <div>
             <p>Enter Number</p>
-            <input type="number" ng-model="oddNum" ng-keypress="showOdd($event)" ng-style="{'background-color':result2}">
-            <input type="button" value="ok"><br>
-    
+            <input type="number" ng-model="oddNum" ng-keypress="showOdd($event)"
+                ng-style="{'background-color':result2}">
+
         </div>
     </section>
     <br>
-   
+
 
     <script>
         angular.module("customService", [])

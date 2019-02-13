@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" ng-app = 'swabhavTechlabs'>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="angular.js"></script>
+    <title>Document</title>
+</head>
+<body class="container" style="margin-top: 10px" ng-controller='TaskController' >
+    <div class="jumbotron text-center"><h2>Todo List</h2></div>
+
+    <form class="form-inline" ng-submit="taskAdd()">
+        <input type="text" ng-model="taskInput" size="50" placeholder="ENTER TASK">
+        <input class="btn btn-primary" type="submit" value="Add Task">
+    </form>
+    
+    <ul style="margin-top: 10px" class="list-group">
+        <li class="list-group-item" ng-repeat="task in StoredList">
+            <span class="text-capitalize" ><strong>{{task.discreption}}</strong></span>
+            <span class="text-info" >{{task.date|date: "short"}}</span>
+        </li>
+    </ul>
+    <script>
+       var app = angular.module('swabhavTechlabs',[]);
+       app.factory ('TaskService',['$q',function($q){
+           var obj = {};
+                obj.add = function(task){
+                    console.log(task);
+                    var Tasklist = [];
+                    return $q(function(resolve,reject){
+                        
+                        Tasklist.unshift(task);
+                        resolve("Data added Succesfully");
+                        reject("Data can't be added")
+                        save(task);
+                    })
+                }
+                obj.get = function(){
+                    var list = retrive();
+                    return list;
+                }
+                var save = function(task){
+                    var list = retrive();
+                    list.unshift(task);
+                    localStorage.setItem("TodoList",JSON.stringify(list));
+                }
+                
+                var retrive = function(){
+                    var Localtasklist = [];
+                    if(JSON.parse(localStorage.getItem("TodoList") == null)){
+                        return Localtasklist;
+                    }else{
+                        Localtasklist = JSON.parse(localStorage.getItem("TodoList"));
+                        return Localtasklist;
+                    }
+                }
+           return obj;
+       }]);
+       app.controller('TaskController',['$scope','TaskService',function($scope,TaskService){
+        $scope.StoredList = TaskService.get();
+            $scope.taskAdd = function(){
+                var taskobj = {
+                    discreption : $scope.taskInput,
+                    date : new Date(),
+                    status : false
+                }
+                console.log(taskobj);
+                TaskService.add(taskobj);
+                $scope.StoredList = TaskService.get();
+                $scope.taskInput = "";
+                console.log(StoredList);
+            }
+       }])
+    </script>
+</body>
+</html>

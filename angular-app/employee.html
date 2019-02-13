@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="swabhav-app">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="angular.js"></script>
+</head>
+
+<body>
+    <section ng-controller="employeeController">
+        <button ng-click="submitForm($event)">Hit</button>
+       <h5>
+           {{data}}
+       </h5>
+    </section>
+    <script>
+        angular.module('swabhav-app', [])
+            .factory('employeeService', ['$q', '$http', function ($q, $http) {
+                var obj = {};
+                obj.getData = function () {
+                    return $q(function (resolve, reject) {
+                        $http({
+                            method: "GET",
+                            url: "data.txt"
+                        }).then(function (response) {
+                            console.log(response);
+                            if (response.status == 200) {
+                                resolve(response.data);
+                            } else {
+                                reject("Data can be fetched");
+                            }
+                        })
+                    })
+                }
+                return obj;
+            }])
+            .controller('employeeController', ['$scope', 'employeeService', function ($scope, employeeService) {
+                
+                $scope.submitForm = function (event) {
+                    var promise = employeeService.getData();
+                    console.log(promise)
+                    promise.then(function (response) {
+                        console.log(response)
+                        $scope.list=[]
+                        $scope.list.push(response.split("\\r?\\n"));
+                        $scope.data = $scope.list;
+                        console.log($scope.list)
+                    })
+                }
+            }]);
+    </script>
+</body>
+
+</html>

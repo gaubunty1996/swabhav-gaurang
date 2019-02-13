@@ -1,29 +1,31 @@
 <!DOCTYPE html>
 <html>
 <script src="angular.js"></script>
-
 <body>
 
-    <div ng-app="swabhav-app" ng-controller="myCtrl">
+<div ng-app="swabhav-app" ng-controller="myCtrl"> 
+<form novalidate>
+    <input ng-model="number">
+    <input type="submit" ng-click="submitForm(number)" value="Show data">
+</form>
 
+<pre>{{ data }}</pre>
 
-        <h1>{{myWelcome}}</h1>
-
-    </div>
-    <script>
-        var app = angular.module('swabhav-app', []);
-        app.controller('myCtrl', function ($scope, $http) {
-            $http({
-                method: "GET",
-                url: "http://numbersapi.com/5"
-            }).then(function mySuccess(response) {
-                $scope.myWelcome = response.data;
-            }, function myError(response) {
-                $scope.myWelcome = response.statusText;
-            });
-        });
-    </script>
+<script>
+var app = angular.module('swabhav-app', []);
+app.controller('myCtrl', function($scope, $http) {
+    $scope.number ;
+    $scope.submitForm = function(number){
+    $http({
+        method : "GET",
+        url : "http://numbersapi.com/"+number
+    }).then(function mySuccess(response) {
+        $scope.data = response.data;
+        }, function myError(response) {
+        $scope.data = response.statusText;
+    });
+}});
+</script>
 
 </body>
-
 </html>

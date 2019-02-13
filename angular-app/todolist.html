@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app="swabhavtechlab">
+
+<head>
+    <script src="angular.js"></script>
+</head>
+
+<body ng-controller="taskList">
+
+    <h2>Todo List</h2>
+
+    <form ng-submit="taskAdd()">
+        <input type="text" ng-model="taskInput" size="50" placeholder="Add Task">
+        <input type="submit" value="Add Task">
+    </form>
+
+    <br>
+    <ul>
+        <li ng-repeat="task in taskList">
+            <span>{{task}}</span>
+        </li>
+    </ul>
+
+
+    <script>
+        var app = angular.module('swabhavtechlab', []);
+        app.controller('taskList', ['$scope', function ($scope) {
+            $scope.taskList = [];
+            $scope.taskAdd = function () {
+                console.log($scope.taskInput);
+                if($scope.taskInput != "" && $scope.taskInput != undefined)
+                    $scope.taskList.unshift($scope.taskInput);
+                $scope.taskInput = "";
+            };
+        }]);
+    </script>
+
+</body>
+
+</html>

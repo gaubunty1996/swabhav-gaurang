@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Custom Service</title>
+    <script src="angular.js"></script>
+  </head>
+
+  <body ng-app="customService">
+    <section
+      ng-controller="firstController"
+      ng-style="{'background-color':result}"
+    >
+      <p>Enter Number</p>
+      <input type="number" ng-model="evenNum" ng-keypress="showEven($event)" />
+    </section>
+    <br />
+    <hr />
+    <section
+      ng-controller="secondController"
+      ng-style="{'background-color':result2}"
+    >
+      <p>Enter Number</p>
+      <input
+        type="number"
+        ng-model="oddNum"
+        ng-keypress="showOdd($event)"
+        ng-style="{'background-color':result2}"
+      />
+    </section>
+    <br />
+
+    <script>
+      angular.module("customService", [])
+        .factory("mathService", function($log, $rootScope,$q) {
+          $log.info("Service created");
+          var obj = {};
+          obj.even = num => {
+            return $q(function (resolve, reject) {
+                if (num % 2 == 0) {
+                return "Green";
+                }
+                return "Red";
+            })};
+          obj.odd = num => {
+            return $q(function (resolve, reject) {
+                if (num % 2 == 0) {
+                return "Green";
+                }
+                return "Red";
+          })};
+          return obj;
+        })
+        .controller("firstController", ($rootScope, $scope, mathService) => {
+          $rootScope.showEven = event => {
+            console.log("hello");
+            if (event.keyCode == 13) {
+                
+              mathService.even($scope.evenNum)
+              .then((r) => {
+                $scope.result = "Green";
+              })
+              .catch((r) => {
+                  $scope.reject = "Red";
+              });
+            }
+          };
+        })
+        .controller("secondController", ($rootScope, $scope, mathService) => {
+          $rootScope.showOdd = event => {
+            console.log("hello");
+            if (event.keyCode == 13) {
+              $scope.result2 = mathService.odd($scope.oddNum);
+            }
+          };
+        });
+    </script>
+  </body>
+</html>
