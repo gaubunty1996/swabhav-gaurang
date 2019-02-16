@@ -1,157 +1,179 @@
-<html ng-app="swabhavtechlab">
 
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <script src="angular.js"> </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/bootstrap.css">
-    <script src="jquery-3.3.1.js"></script>
-    <script src="js/bootstrap.js"></script>
-    
+    <script src="angular.js"></script>
+    <title>Document</title>
 </head>
 
-<body ng-controller="studentController" class="container" style="margin-top: 5px" ng-controller="studentController">
-    <div class="jumbotron">
-        <h2 style="text-align: center">
-            Student Form
-        </h2>
-    </div>
-    <form class="form-horizontal">
-        <div class="form-group">
-            <label for="inputRollNo" class="col-sm-2 control-label">Enter Roll No</label>
-            <div class="col-sm-10">
-                <input type="number" class="form-control" ng-model="s.rollno" placeholder="Enter Roll No">
-            </div>
+<body class="container" style="margin-top: 5px" ng-app="SwabhavTechlabs">
+    <section ng-controller='StudentFormController'>
+        <div class="jumbotron">
+            <h2 style="text-align: center">
+                STUDENT FORM
+            </h2>
         </div>
-        <div class="form-group">
-            <label for="inputName" class="col-sm-2 control-label">Enter Name</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" ng-model="s.name" placeholder="Enter Name">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="inputRollNo" class="col-sm-2 control-label">Enter Roll No</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" ng-model="inputRollNo" placeholder="Enter Roll No">
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="inputAge" class="col-sm-2 control-label">Enter Age</label>
-            <div class="col-sm-10">
-                <input type="number" class="form-control" ng-model="s.age" placeholder="Enter Age">
+            <div class="form-group">
+                <label for="inputName" class="col-sm-2 control-label">Enter Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" ng-model="inputName" placeholder="Enter Name">
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="inputEmail" class="col-sm-2 control-label">Enter Email Id</label>
-            <div class="col-sm-10">
-                <input type="email" class="form-control" ng-model="s.email" placeholder="Enter Email Id">
+            <div class="form-group">
+                <label for="inputAge" class="col-sm-2 control-label">Enter Age</label>
+                <div class="col-sm-10">
+                <input type="number" class="form-control" ng-model="inputAge" placeholder="Enter Age">
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="inputDate" class="col-sm-2 control-label">Enter Date</label>
-            <div class="col-sm-10">
-                <input type="date" class="form-control" ng-model="s.date" placeholder="Enter Date">
+            <div class="form-group">
+                <label for="inputEmail" class="col-sm-2 control-label">Enter Email Id</label>
+                <div class="col-sm-10">
+                <input type="email" class="form-control" ng-model="inputEmail" placeholder="Enter Email Id">
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label">Gender</label>
-            <div class="col-sm-10">
+            <div class="form-group">
+                <label for="inputDate" class="col-sm-2 control-label">Enter Date</label>
+                <div class="col-sm-10">
+                <input type="date" class="form-control" ng-model="inputDate" placeholder="Enter Date">
+                </div>
+            </div>
+            <div class="form-group">
                 <label>
-                    <input type="radio" name="optionsRadios" ng-model="s.isMale" value="true">
-                    Male
-                </label>
-                <br />
-                <label>
-                    <input type="radio" name="optionsRadios" ng-model="s.isMale" value="false">
-                    Female
+                    <input type="radio" style="margin-left: 210px" ng-model="GenderOption"  value="true" >
+                    MALE
                 </label>
             </div>
+            <div class="form-group">
+                <label>
+                    <input type="radio" style="margin-left: 210px" ng-model="GenderOption"  value="false">
+                    FEMALE
+                </label>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="button" id="addButton" ng-click='addStudentDetails()' class="btn btn-primary" >Add</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <a href="#printData" class="btn btn-primary" >Display</a>
+                </div>
+            </div>
+        </form>
+        <div id="printData">
+            <!--<img id="loading-image" src="colourfulimage.gif" ng-hide="SpinnerHide" alt="Loading..." />-->
+            <table class="table table-striped" style="margin-top: 10px" ng-hide="hidden">
+                <tr>
+                    <th>Student Roll NO</th>
+                    <th>Student Name</th>
+                    <th>Student Age</th>
+                    <th>Email Id</th>
+                    <th>Gender</th>
+                    <th>Date</th>
+                </tr>
+                <tbody ng-repeat="i in StudentDetailList" >
+                    <tr>
+                        <td>{{i.rollNo}}</td>
+                        <td>{{i.name}}</td>
+                        <td>{{i.age}}</td>
+                        <td>{{i.email}}</td>
+                        <td ng-if="i.isMale == true">Male</td>
+                        <td ng-if="i.isMale == false">Female</td>
+                        <td>{{i.date|date:"short"}}</td>
+                    </tr>
+                </tbody>
+            </table>
 
         </div>
+    </section> 
+    <script>
+        var app = angular.module('SwabhavTechlabs',[]);
+        app.factory('StudentService',['$http','$q',function($http,$q){
+            var serviceobj = {};
 
-    </form>
+            serviceobj.getEmployeeList = function(){
+                return $q(function(resolve,reject){
+                    $http({
+                        method : "GET",
+                        url : "http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/"
+                    }).then(function(response){
+                        if(response.status == 200){
+                            resolve(response.data);
+                        }else{
+                            reject("Data Can't Be Fetched");
+                        }
+                    }).catch(function(err){
+                        reject("Data Can't Be Fetched")
 
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button ng-click="add()" class="btn">Add</button>
-            <button ng-click="displayData()" class="btn btn-primary">Display</button>
-        </div>
-        <div style="height: 50px"></div>
-    </div>
+                    })
+                })
+            }
 
-
-    <div id="printData">
-        <table ng-if="data.length>0" class="table table-bordered">
-            <tr>
-                <th>Sr. No.</th>
-                <th>Id</th>
-                <th>Roll Number</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Date</th>
-                <th>Age</th>
-                <th>Gender</th>
-
-            </tr>
-            <tr ng-repeat="i in data">
-                <td>{{$index+1}}</td>
-                <td>{{i.id}}</td>
-                <td>{{i.rollNo}}</td>
-                <td>{{i.name}}</td>
-                <td>{{i.email}}</td>
-                <td>{{i.date}}</td>
-                <td>{{i.age}}</td>
-                <td ng-if="i.isMale">Male</td>
-                <td ng-if="!i.isMale">Female</td>
-               
-               
-
-            </tr>
-        </table>
-
-    </div>
-<script>
-    angular.module("swabhavtechlab", [])
-    .factory("studentService", function ($http) {
-        var returnData = {};
-
-        returnData.add = function (obj) {
-           
-            console.log(obj);
-            if (
-                obj.rollno == undefined || obj.rollno == "" ||
-                obj.name == undefined || obj.name == "" ||
-                obj.age == undefined || obj.age == "" ||
-                obj.email == undefined || obj.email == "" ||
-                obj.date == undefined || obj.date == ""
-            ) {
+            serviceobj.addNewStudent = function(Studentobj){
+                if(validator(Studentobj)){
+                    $http.post('http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/', Studentobj).then(function(response){
+                    
+                }, function(reject){
+                    alert("Problem Occured");
+                });
+                }else{
+                    alert("Please Fill Every Details");
+                }
                 
-                alert("All fields are mandatory");
-            } else {
-                return $http.post('http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/', obj);
+            }
 
-            };
-        }
+            var validator= function(Studentobj){
+                if(Studentobj.rollNo == undefined || Studentobj.name == undefined || Studentobj.age == undefined
+                 || Studentobj.email == undefined || Studentobj.date == undefined || Studentobj.isMale == undefined ){
+                    return false;
+                }return true;
+            }
 
-        returnData.displayData = function () {
-            return $http.get('http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/');
+            return serviceobj;
+        }])
 
-        }
-        return returnData;
+        app.controller('StudentFormController',['$scope','$filter','StudentService',function($scope,$filter,StudentService){
+            $scope.StudentDetailList ;
+            $scope.hidden = true;
+            
 
-    })
-    .controller("studentController", function ($scope, studentService) {
-        $scope.s = {};
-        $scope.add = function () {
-            var httpPromise = studentService.add($scope.s);
-            httpPromise.then(function (response) {
-                console.log(response);
-                $scope.s = {};
-            });
-
-        };
-        $scope.displayData = function () {
-            var httpPromise = studentService.displayData();
-            httpPromise.then(function(response){
-                $scope.data=response.data;
-            })
-        }
-
-    });
-
-</script>
+            $scope.showStudentDetails = function(){
+               
+                StudentService.getEmployeeList().then(function(response){
+                $scope.StudentDetailList = response;
+                console.log($scope.StudentDetailList);
+                
+                $scope.hidden = false; 
+                }).catch(function(reject){
+                    
+                    alert(reject);
+                }) 
+            }
+            $scope.addStudentDetails = function(){
+                let Studentdate = $filter('date')($scope.inputDate,'short');
+                let studentobj = {
+                    rollNo : $scope.inputRollNo,
+                    name : $scope.inputName,
+                    age : $scope.inputAge,
+                    email : $scope.inputEmail,
+                    date : Studentdate,
+                    isMale : $scope.GenderOption
+                }
+                console.log(studentobj);
+                StudentService.addNewStudent(studentobj);
+            }
+        }])
+    </script>
 </body>
-
 </html>

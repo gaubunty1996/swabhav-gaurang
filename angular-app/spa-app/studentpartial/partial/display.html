@@ -1,0 +1,32 @@
+<section id="display">
+       
+    <div id="printData">
+           
+        <!--<img id="loading-image" src="colourfulimage.gif" ng-hide="SpinnerHide" alt="Loading..." />-->
+        <Label>Total number of students</Label>
+        <span class="badge ">{{StudentDetailList.length}} </span>
+        <table class="table table-striped" style="margin-top: 10px" ng-hide="hidden">
+            <tr>
+                <th>Student Roll NO</th>
+                <th>Student Name</th>
+                <th>Student Age</th>
+                <th>Email Id</th>
+                <th>Gender</th>
+                <th>Date</th>
+            </tr>
+            <tbody ng-repeat="i in StudentDetailList|orderBy:'name'" >
+                <tr>
+                    <td>{{i.rollNo}}</td>
+                    <td>{{i.name}}</td>
+                    <td>{{i.age}}</td>
+                    <td>{{i.email}}</td>
+                    <td ng-if="i.isMale == true">Male</td>
+                    <td ng-if="i.isMale == false">Female</td>
+                    <td>{{i.date|date:"short"}}</td>
+                    <td><a href="#/edit/{{i.id}}" class="btn btn-primary" >Edit</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</section>
