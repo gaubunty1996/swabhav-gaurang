@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html ng-app="Blueball">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="angular.js"></script>
+</head>
+
+<body>
+    <section ng-controller="buttonController">
+        <button ng-click="generateButtons($event)">Start
+        </button>
+        <button ng-disabled="winCondition" ng-repeat="i in array" ng-click="colorChange($event)" value={{i}}>
+            {{i}}
+        </button>
+        <h1>
+            {{result}}
+        </h1>
+    </section>
+    <script>
+        angular.module('Blueball', []).controller('buttonController', ['$scope', '$rootScope', function ($scope, $rootScope) {
+            $scope.winCondition = false;
+            $scope.count = 1;
+            $scope.array = [];
+            $scope.randomNumber = Math.floor(Math.random() * 50);
+            console.log($scope.randomNumber)
+            $scope.color = "";
+            $scope.colorChange = (event) => {   // function(event){}
+                if ($scope.count == 5) {
+                    $scope.winCondition = true;
+                }
+                console.log("hellosss" + event.srcElement.value)
+                if ($scope.randomNumber < event.srcElement.value) {
+
+                    event.target.style.backgroundColor = "Red";
+                    event.target.disabled = true;
+                    $scope.count = $scope.count + 1;
+
+
+
+                }
+                else if ($scope.randomNumber == event.srcElement.value) {
+                    $scope.color = "Blue"
+                    event.target.style.backgroundColor = "Blue";
+                    $scope.result = "win"
+                    $scope.count = $scope.count + 1;
+                    event.target.disabled = true;
+                    $scope.winCondition = true;
+
+
+                }
+                else {
+                    $scope.color = "Green";
+                    event.target.style.backgroundColor = "Green";
+                    event.target.disabled = true;
+                    $scope.count = $scope.count + 1;
+                }
+
+            }
+            $scope.generateButtons = (event) => {
+                console.log("hello")
+
+                for (let i = 1; i <= 50; i++) {
+                    $scope.array.push(i);
+                }
+            }
+        }])
+    </script>
+</body>
+
+</html>

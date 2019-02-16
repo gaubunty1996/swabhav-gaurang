@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="swabhavtechlab">
+<head>
+    
+    <script src="angular.js"></script>
+</head>
+<body>
+    <div ng-controller="ngrepeatController">
+        <p ng-repeat="x in data track by $index">{{x}}</p>
+
+    </div>
+    <script>
+        angular.module("swabhavtechlab",[])
+        .controller("ngrepeatController",function($scope){
+            var array=[10,10,10,10,10,10,10,10];
+            $scope.data=array;
+        })
+    
+    </script>
+    
+</body>
+</html>

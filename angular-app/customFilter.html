@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="swabhavtechlabs">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="angular.js"></script>
+</head>
+
+<body>
+    <section ng-controller="SalaryController">
+        <p ng-init="income=20500" style="color:{{income|SalaryColor}}">{{income}}</p>
+        
+
+    </section>
+    <section ng-init="discreption='When you truly believe in what you are doing, it shows.
+    And it pays. Winners in life are those who are excited about where theyre going.'">
+        <p>{{discreption|summary:10}}</p>
+    </section>
+    <script>
+        angular.module('swabhavtechlabs', []).
+            filter('SalaryColor', [function () {
+                return function (item) {
+                    if (item > 50000) {
+                        return "Green"
+                    }
+                    else if(item>20000 && item<50000){
+                        return "Blue"
+                    }
+                    else {
+                        return "Red"
+                    }
+                }
+            }]).
+            controller('SalaryController', ["$scope", function ($scope) {
+                $scope.salary = 50000;
+            }]).
+            filter('summary', function () {
+                return function (item, length) {
+                    if (item.length > length) {
+                        item = item.substr(0, length);
+                        return item + "...";
+                    } else {
+                        return item;
+                    }
+                }
+            })
+    </script>
+</body>
+
+</html>

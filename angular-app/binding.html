@@ -16,12 +16,13 @@
         <p>ID : <input type="text" ng-model="employee.id"></p>
         <p>Name : <input type="text" ng-model="employee.name"></p>
         <p>Salary : <input type="text" ng-model="employee.salary"></p>
+
+        <p>ID :{{::employee.id}}</p>
+        <p>Name :{{::employee.name}}</p>
+        <p>Salery :{{::employee.salary}}</p>
+       
     </section>
-    <section ng-controller="binding">
-        <p>ID :{{employee.id}}</p>
-        <p>Name :{{employee.name}}</p>
-        <p>Salery :{{employee.salary}}</p>
-    </section>
+
     <script>
         angular.module('swabhavTechlab',[])
             .controller('binding',['$scope',function($scope){

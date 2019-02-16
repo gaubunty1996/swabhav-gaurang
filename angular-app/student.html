@@ -1,0 +1,157 @@
+<html ng-app="swabhavtechlab">
+
+<head>
+    <script src="angular.js"> </script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="jquery-3.3.1.js"></script>
+    <script src="js/bootstrap.js"></script>
+    
+</head>
+
+<body ng-controller="studentController" class="container" style="margin-top: 5px" ng-controller="studentController">
+    <div class="jumbotron">
+        <h2 style="text-align: center">
+            Student Form
+        </h2>
+    </div>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="inputRollNo" class="col-sm-2 control-label">Enter Roll No</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" ng-model="s.rollno" placeholder="Enter Roll No">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputName" class="col-sm-2 control-label">Enter Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" ng-model="s.name" placeholder="Enter Name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputAge" class="col-sm-2 control-label">Enter Age</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" ng-model="s.age" placeholder="Enter Age">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmail" class="col-sm-2 control-label">Enter Email Id</label>
+            <div class="col-sm-10">
+                <input type="email" class="form-control" ng-model="s.email" placeholder="Enter Email Id">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputDate" class="col-sm-2 control-label">Enter Date</label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control" ng-model="s.date" placeholder="Enter Date">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Gender</label>
+            <div class="col-sm-10">
+                <label>
+                    <input type="radio" name="optionsRadios" ng-model="s.isMale" value="true">
+                    Male
+                </label>
+                <br />
+                <label>
+                    <input type="radio" name="optionsRadios" ng-model="s.isMale" value="false">
+                    Female
+                </label>
+            </div>
+
+        </div>
+
+    </form>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button ng-click="add()" class="btn">Add</button>
+            <button ng-click="displayData()" class="btn btn-primary">Display</button>
+        </div>
+        <div style="height: 50px"></div>
+    </div>
+
+
+    <div id="printData">
+        <table ng-if="data.length>0" class="table table-bordered">
+            <tr>
+                <th>Sr. No.</th>
+                <th>Id</th>
+                <th>Roll Number</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Date</th>
+                <th>Age</th>
+                <th>Gender</th>
+
+            </tr>
+            <tr ng-repeat="i in data">
+                <td>{{$index+1}}</td>
+                <td>{{i.id}}</td>
+                <td>{{i.rollNo}}</td>
+                <td>{{i.name}}</td>
+                <td>{{i.email}}</td>
+                <td>{{i.date}}</td>
+                <td>{{i.age}}</td>
+                <td ng-if="i.isMale">Male</td>
+                <td ng-if="!i.isMale">Female</td>
+               
+               
+
+            </tr>
+        </table>
+
+    </div>
+<script>
+    angular.module("swabhavtechlab", [])
+    .factory("studentService", function ($http) {
+        var returnData = {};
+
+        returnData.add = function (obj) {
+           
+            console.log(obj);
+            if (
+                obj.rollno == undefined || obj.rollno == "" ||
+                obj.name == undefined || obj.name == "" ||
+                obj.age == undefined || obj.age == "" ||
+                obj.email == undefined || obj.email == "" ||
+                obj.date == undefined || obj.date == ""
+            ) {
+                
+                alert("All fields are mandatory");
+            } else {
+                return $http.post('http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/', obj);
+
+            };
+        }
+
+        returnData.displayData = function () {
+            return $http.get('http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/');
+
+        }
+        return returnData;
+
+    })
+    .controller("studentController", function ($scope, studentService) {
+        $scope.s = {};
+        $scope.add = function () {
+            var httpPromise = studentService.add($scope.s);
+            httpPromise.then(function (response) {
+                console.log(response);
+                $scope.s = {};
+            });
+
+        };
+        $scope.displayData = function () {
+            var httpPromise = studentService.displayData();
+            httpPromise.then(function(response){
+                $scope.data=response.data;
+            })
+        }
+
+    });
+
+</script>
+</body>
+
+</html>

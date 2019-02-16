@@ -9,10 +9,10 @@
     <title>Document</title>
 </head>
 <body class="container" style="margin-top: 10px" ng-controller='TaskController' >
-    <div class="jumbotron text-center"><h2>Todo List</h2></div>
+    <div class="jumbotron text-center"><h2>TASK ADDER</h2></div>
 
     <form class="form-inline" ng-submit="taskAdd()">
-        <input type="text" ng-model="taskInput" size="50" placeholder="ENTER TASK">
+        <input type="text" ng-model="taskInput" size="50" placeholder="Add something">
         <input class="btn btn-primary" type="submit" value="Add Task">
     </form>
     
@@ -32,7 +32,7 @@
                     return $q(function(resolve,reject){
                         
                         Tasklist.unshift(task);
-                        resolve("Data added Succesfully");
+                        resolve("Data added ");
                         reject("Data can't be added")
                         save(task);
                     })

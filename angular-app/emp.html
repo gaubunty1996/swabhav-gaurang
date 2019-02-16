@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="swabhavtechlab">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>hierarchy Display</title>
+    <script src="angular.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+
+<body>
+    <div ng-controller="firstController">
+        <p style="margin-left: 500px"> Search:<input type="text" ng-model="searchText"></p>
+        <p>Emplyoee Id : <input type="text" ng-model='randomId'> </p>
+        <p>Emplyoee Name : <input type="text" ng-model="Name"></p>
+        <p>Emplyoee Designation : <select ng-model="selectedDesignation">
+                <option ng-repeat="designation in empDesignation track by $index">{{designation}}
+                </option>
+            </select></p>
+        <p>Emplyoee Manager Id : <select ng-model="selectedManagerId">
+                <option ng-repeat="managerId in empManagerId track by $index">{{managerId}}</option>
+            </select></p>
+        <p>Emplyoee Date_of_joining : <input type="date" ng-model="selected_Date_of_joining"></p>
+        <p>Salary : <input type="text" ng-model="salary"></p>
+        <p>Commission : <input type="text" ng-model="commission"></p>
+        <p>Emplyoee Department No. : <select ng-model="selectedDepartmentNum">
+                <option ng-repeat="department in empDepartment_num">{{department}}</option>
+            </select></p>
+
+        <p><button ng-click="addDataEmp()">ADD DATA</button></p>
+
+        <hr>
+        <button ng-click="showData()">Show Data</button>
+
+
+        <table id="table" ng-hide="tableToggle">
+            <tr>
+                <th>Emplyoee ID</th>
+                <th>Emplyoee Name</th>
+                <th>Emplyoee Designation</th>
+                <th>Manager Id </th>
+                <th>Date_of_joining</th>
+                <th>Salary</th>
+                <th>Commission</th>
+                <th>Department No.</th>
+                <th>Delete</th>
+            </tr>
+            <tbody ng-repeat="emp  in Empdata |filter:searchText | orderBy:'Name'">
+                <tr>
+                    <td>{{emp.Id}}</td>
+                    <td>{{emp.Name}}</td>
+                    <td>{{emp.Designation}}</td>
+                    <td>{{emp.ManagerId}}</td>
+                    <td>{{emp.Date_of_joining|date}}</td>
+                    <td>{{emp.Salary}}</td>
+                    <td>{{emp.Commission}}</td>
+                    <td>{{emp.Department_num}}</td>
+                    <td> <button type="submit" id="{{emp.Id}}" ng-click="deleteData($event)"> Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+    </div>
+
+    <script>
+        angular.module("swabhavtechlab", []).factory("services", ["$log", "$q", "$http", function ($log, $q, $http) {
+            console.log("inside service");
+            var obj = {};
+            var Empdata = [];
+
+            obj.getEmplyoeeList = function () {
+                return $q(function (resolve, reject) {
+                    $http.get("http://localhost/angular-app/data.txt").then(function (response) {
+
+                        if (response.status == 200) {
+                            //  $scope.Empdata = [];
+                            // var Empdata = [];
+                            var stringArray = response.data;
+                            stringArray = stringArray.split("\n");
+
+                            for (var i = 0; i < stringArray.length; i++) {
+                                stringArray[i] = stringArray[i].replace(/\s+/g, "");
+                            }
+
+                            let duplicateData = (stringArray) => stringArray.filter((v, i) => stringArray.indexOf(v) === i)
+                            var cleanData = duplicateData(stringArray);
+                            //  console.log(cleanData);
+
+                            //  var displayData = [];
+                            for (var i = 0; i < cleanData.length; i++) {
+                                var str = cleanData[i];
+                                var str = str.split(",");
+
+                                //  console.log(cleanData[i]);
+                                var obj = {
+                                    Id: str[0].replace(/'/g, ""),
+                                    Name: str[1].replace(/'/g, ""),
+                                    Designation: str[2].replace(/'/g, ""),
+                                    ManagerId: str[3].replace(/'/g, ""),
+                                    Date_of_joining: str[4].replace(/'/g, ""),
+                                    Salary: str[5].replace(/'/g, ""),
+                                    Commission: str[6].replace(/'/g, ""),
+                                    Department_num: str[7].replace(/'/g, ""),
+                                }
+                                //  displayData.push(obj);
+                                Empdata.push(obj);
+                            }
+                            resolve(Empdata);
+                            //  console.log(response.data);
+                        } else {
+                            reject("errroe obtained");
+                        }
+                    });
+                })
+            }
+
+            obj.deleteData = function (empId) {
+                for (var i = 0; i < Empdata.length; i++) {
+                    if (empId == Empdata[i].Id) {
+                        Empdata.splice(i, 1);
+                    }
+                }
+            }
+
+            obj.addDataEmp = function (emp) {
+                var obj = {
+                    Id: emp.Id,
+                    Name: emp.Name,
+                    Designation: emp.Designation,
+                    ManagerId: emp.ManagerId,
+                    Date_of_joining: emp.Date_of_joining,
+                    Salary: emp.Salary,
+                    Commission: emp.Commission,
+                    Department_num: emp.Department_num,
+                }
+                Empdata.push(obj);
+                // console.log($scope.data);
+            }
+
+            return obj;
+        }]).controller("firstController", ["$scope", "services", function ($scope, services) {
+            services.getEmplyoeeList().then((empList) => {
+                console.log("excute resolve");
+                $scope.Empdata = [];
+                console.log(empList);
+                $scope.Empdata = empList;
+                 
+              //  $scope.randomId =;
+
+                /*   var date = new Date();
+                   var mm = date.getMilliseconds();
+                   var sss = date.getMinutes();
+                   $scope.randomId = mm + "" + sss;*/
+                  // $scope.randomId=$scope.generatorEmpId();
+
+
+                $scope.empManagerId = [7698, 7782, 7566, 7839];
+                $scope.empDesignation = ["CLERK", "SALESMAN", "MANAGER", "ANALYST", "PRESIDENT"];
+                $scope.empDepartment_num = [10, 20, 30];
+                
+
+                $scope.tableToggle = true;
+                $scope.showData = function () {
+                    if ($scope.tableToggle == true) {
+                        $scope.tableToggle = false;
+                    } else {
+                        $scope.tableToggle = true;
+                    }
+                }
+
+                $scope.deleteData = function (event) {
+                    var answer = confirm("CONFIRM");
+                    if (answer == true) {
+                        alert("Data is Deleted");
+                        services.deleteData(event.target.id);
+                    } else {
+                        location.reload;
+                    }
+                }
+
+                $scope.addDataEmp = function () {
+                    var obj = {
+                        Id: $scope.generatorEmpId(),
+                        Name: $scope.Name.toUpperCase(),
+                        Designation: $scope.selectedDesignation,
+                        ManagerId: $scope.selectedManagerId,
+                        Date_of_joining: $scope.selected_Date_of_joining,
+                        Salary: $scope.salary,
+                        Commission: $scope.commission,
+                        Department_num: $scope.selectedDepartmentNum,
+                    }
+                    services.addDataEmp(obj);
+                    $scope.clearTextData();
+                }
+
+                $scope.clearTextData = function () {
+                    $scope.randomId = $scope.generatorEmpId();
+                    $scope.randomId="";
+                    $scope.Name = "";
+                    $scope.selectedDesignation = "";
+                    $scope.selectedManagerId = "";
+                    $scope.selected_Date_of_joining = "";
+                    $scope.salary = "";
+                    $scope.commission = "";
+
+                }
+
+                $scope.generatorEmpId = function () {
+                    var date = new Date();
+                    var mm = date.getMilliseconds();
+                    var sss = date.getMinutes();
+                    var empId = mm + "" + sss;
+
+                    return empId;
+                }
+
+
+            }).catch((e) => {
+                console.log(e);
+            })
+
+        }])
+
+    </script>
+</body>
+
+</html>

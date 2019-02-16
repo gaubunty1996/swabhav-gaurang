@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html ng-app="swabhavtechlab">
+
+<head>
+    <script src="angular.js"></script>
+    <script type="text/ng-template" id="tree_view">
+        {{ emp.empName }}
+          <ul ng-if="emp.teamMembers">
+              <li ng-repeat="emp in emp.teamMembers" ng-include="'tree_view'">
+              </li>
+          </ul>
+        </script>
+</head>
+
+<body ng-controller="employeeController">
+    <ul>
+        <li ng-repeat="emp in employees" ng-include="'tree_view'"></li>
+    </ul>
+     <ul id="myUL">
+        <li><span class="caret">{{president.empName}}</span>
+            <ul ng-if="president.teamMembers.length>0">
+                <li ng-repeat="emp in president.teamMembers">{{emp.empName}}
+                    <ul ng-if="emp.teamMembers.length>0">
+                        <li ng-repeat="employee in emp.teamMembers">
+                            {{employee.empName}}
+                            <ul ng-if="employee.teamMembers.length>0">
+                                <li ng-repeat="employees in employee.teamMembers">
+                                    {{employees.empName}}
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul> 
+
+    <script>
+        var toggler = document.getElementsByClassName("caret");
+        var i;
+        for (i = 0; i < toggler.length; i++) {
+            toggler[i].addEventListener("click", function () {
+                this.parentElement.querySelector(".nested").classList.toggle("active");
+                this.classList.toggle("caret-down");
+            });
+        }
+    </script>
+
+    <script>
+        angular.module("swabhavtechlab", [])
+            .controller("employeeController", function ($scope, $http) {
+                var httpPromise = $http({
+                    method: 'GET',
+                    url: "http://localhost/angular-app/data.txt"
+                });
+                httpPromise.then(function (response) {
+                    var i;
+                    var strArray = response.data.split("\n");
+                    for (i = 0; i < strArray.length; i++) {
+                        strArray[i] = strArray[i].replace(/\s+/g, "");
+                    }
+                    var strArray = strArray.filter(function (value, index, self) {
+                        return self.indexOf(value) === index;
+                    });
+                    console.log(strArray);
+                    var objArray = [];
+                    for (i = 0; i < strArray.length; i++) {
+                        var row = strArray[i].split(",");
+                        var obj = {
+                            empId: row[0],
+                            empName: row[1].replace("'", "").replace("'", ""),
+                            mgrId: row[3],
+                            teamMembers: []
+                        };
+                        objArray.push(obj);
+                    }
+                    console.log(objArray);
+                    var rootemp = getEmpStructure(objArray);
+                    console.log(rootemp);
+                    $scope.employees = [rootemp];
+                });
+                function getEmpStructure(empArray) {
+                    var rootEmp = null;
+                    for (var i = 0; i < empArray.length; i++) {
+                        var emp = empArray[i];
+                        if (emp.mgrId == "NULL") {
+                            rootEmp = emp;
+                        }
+                        else {
+                            var mgr = getManager(emp, empArray);
+                            mgr.teamMembers.push(emp);
+                        }
+                    }
+                    return rootEmp;
+                }
+                function getManager(emp, empArray) {
+                    for (var i = 0; i < empArray.length; i++) {
+                        var e = empArray[i];
+                        if (emp.mgrId == e.empId) {
+                            return e;
+                        }
+                    }
+                    return null;
+                }
+            });
+    </script>
+
+</body>
+
+</html>

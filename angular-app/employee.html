@@ -16,6 +16,11 @@
        <h5>
            {{data}}
        </h5>
+       <ul>
+           <li ng-repeat="employee in list">
+            {{employee}}
+           </li>
+       </ul>
     </section>
     <script>
         angular.module('swabhav-app', [])
@@ -25,11 +30,12 @@
                     return $q(function (resolve, reject) {
                         $http({
                             method: "GET",
-                            url: "data.txt"
+                            url: "http://localhost/angular-app/data.txt"
                         }).then(function (response) {
                             console.log(response);
                             if (response.status == 200) {
-                                resolve(response.data);
+                                let array=[10];
+                                    resolve(array);
                             } else {
                                 reject("Data can be fetched");
                             }
@@ -46,9 +52,11 @@
                     promise.then(function (response) {
                         console.log(response)
                         $scope.list=[]
-                        $scope.list.push(response.split("\\r?\\n"));
+                        $scope.list.push(response.split("\n"));
                         $scope.data = $scope.list;
                         console.log($scope.list)
+                    }).catch(function(response){
+                        console.log(response)
                     })
                 }
             }]);
