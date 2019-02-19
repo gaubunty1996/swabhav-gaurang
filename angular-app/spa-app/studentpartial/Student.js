@@ -61,7 +61,7 @@ app.factory('StudentService', ['$http', '$q', '$window', function ($http, $q, $w
                     method: "DELETE",
                     url: "http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/" + id
                 }).then(function (response) {
-                    
+
                     if (response.status == 200) {
                         resolve("record deleted")
                         $window.location.reload();
@@ -110,6 +110,21 @@ app.factory('StudentService', ['$http', '$q', '$window', function ($http, $q, $w
         }
 
     }
+    serviceobj.updateStudentById=(updatedobj,id)=>{
+        console.log("service called")
+        console.log(updatedobj)
+        console.log(id)
+        $http.put('http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/'+id, updatedobj).then(function(response){
+            $window.location.href = "#/display";
+        },function(reject){
+            alert("Problem occured")
+        })
+    }
+
+    serviceobj.updateDetails = function (Studentobj, id) {
+
+
+    }
 
     var validator = function (Studentobj) {
         if (Studentobj.rollNo == undefined || Studentobj.name == undefined || Studentobj.age == undefined
@@ -134,7 +149,7 @@ app.controller('StudentFormController', ['$scope', '$filter', 'StudentService', 
 
         alert(reject);
     })
-  
+
     $scope.addStudentDetails = function () {
         let Studentdate = $filter('date')($scope.inputDate, 'dd-MMM-yy');
         let studentobj = {
@@ -150,15 +165,33 @@ app.controller('StudentFormController', ['$scope', '$filter', 'StudentService', 
     }
 }])
 
-app.controller('StudentDisplayController', ['$scope', '$filter', 'StudentService', function ($scope, $filter, StudentService) {
+app.controller('StudentDisplayController', ['$window', '$scope', '$filter', '$rootScope', 'StudentService', function ($window, $scope, $filter, $rootScope, StudentService) {
     $scope.StudentDetailList;
     $scope.hidden = true;
+    $scope.retrivedobj = JSON.parse($window.sessionStorage.getItem("obj"));
+    console.log($scope.retrivedobj)
 
     $scope.deletedata = (id) => {
-        
-        StudentService.Delete(id).then(function (response) {
-            alert(response);
-        });
+        if ($scope.retrivedobj != null) {
+            if ($scope.retrivedobj.isLoggedIn) {
+
+                StudentService.Delete(id).then(function (response) {
+                    alert(response);
+                });
+            }
+            else {
+                alert("you do not have the permission to delete")
+                console.log($scope.retrivedobj)
+                $window.location.href = "#/login";
+
+            }
+        }
+        else {
+            alert("user not logged in");
+            $window.location.href = "#/login";
+
+
+        }
     }
 
     StudentService.getEmployeeList().then(function (response) {
@@ -172,14 +205,27 @@ app.controller('StudentDisplayController', ['$scope', '$filter', 'StudentService
     })
 
 }])
-app.controller('StudentLoginController', ['$rootScope', '$scope', '$filter', '$routeParams', 'StudentService', function ($rootScope, $scope, $filter, $routeParams, StudentService) {
-    $scope.Studentobj;
-    $scope.uiddata = $routeParams.UID;
-    let Studentdate = $filter('date')($scope.inputDate, 'dd-MMM-yy');
+app.controller('StudentLoginController', ['$rootScope', '$scope', '$window', 'StudentService', function ($rootScope, $scope, $window, StudentService) {
+    $scope.loginemail;
+    $scope.loginpass;
+
+    var userStatus = {
+        email: $scope.loginemail,
+        password: $scope.loginpass,
+        isLoggedIn: false
+    }
+
     $scope.logininput = () => {
         $scope.loginemail = $scope.LoginEmail;
         $scope.loginpass = $scope.LoginPassword;
+
+        userStatus.email = $scope.loginemail;
+        userStatus.password = $scope.loginpass;
+        userStatus.isLoggedIn = true;
+        console.log(userStatus);
+
         $rootScope.status = StudentService.getStatusofUser($scope.loginemail, $scope.loginpass);
+        $window.sessionStorage.setItem("obj", JSON.stringify(userStatus));
         if ($rootScope.status) {
             console.log($rootScope.status)
             console.log($scope.loginemail);
@@ -190,30 +236,66 @@ app.controller('StudentLoginController', ['$rootScope', '$scope', '$filter', '$r
 
     }
 }])
-app.controller('StudentEditController', ['$scope', '$filter', '$routeParams', 'StudentService', function ($scope, $filter, $routeParams, StudentService) {
+app.controller('StudentEditController', ['$scope', '$window', '$filter', '$routeParams', 'StudentService', function ($scope, $window, $filter, $routeParams, StudentService) {
     $scope.Studentobj;
     $scope.uiddata = $routeParams.UID;
-    let Studentdate = $filter('date')($scope.inputDate, 'dd-MMM-yy');
+
+    $scope.retrivedobj = JSON.parse($window.sessionStorage.getItem("obj"));
+    console.log($scope.retrivedobj)
+
+    $scope.updateDetailsOfStudent = () => {
+        alert("updated")
+        let Studentdate = $filter('date')($scope.inputDate, 'dd-MMM-yy');
+        let studentobj = {
+            rollNo: $scope.inputRollNo,
+            name: $scope.inputName,
+            age: $scope.inputAge,
+            email: $scope.inputEmail,
+            date: Studentdate,
+            isMale: $scope.GenderOption
+        }
+        console.log(studentobj);
+        StudentService.updateStudentById(studentobj,$scope.uiddata)
+    }
+
+   
 
     StudentService.getStudentById($scope.uiddata).then(function (response) {
-        $scope.Studentobj = response;
+        console.log("edit clicked")
+        if ($scope.retrivedobj != null) {
+            if ($scope.retrivedobj.isLoggedIn) {
+                $scope.Studentobj = response;
+                let stdDate = new Date($scope.Studentobj[0].date);
+                console.log(stdDate)
+                let Stddate = $filter('date')(stdDate, 'dd-MM-yy');
+                $scope.inputRollNo = $scope.Studentobj[0].rollNo;
+                $scope.inputName = $scope.Studentobj[0].name;
+                $scope.inputAge = $scope.Studentobj[0].age;
+                $scope.inputEmail = $scope.Studentobj[0].email;
+                $scope.inputDate = stdDate;
 
-        $scope.inputRollNo = $scope.Studentobj[0].rollNo;
-        $scope.inputName = $scope.Studentobj[0].name;
-        $scope.inputAge = $scope.Studentobj[0].age;
-        $scope.inputEmail = $scope.Studentobj[0].email;
-        Studentdate = $scope.Studentobj[0].date;
-        if ($scope.Studentobj[0].isMale) {
-            $scope.GenderOption = $scope.Studentobj[0].isMale;
-        }
-        if ($scope.Studentobj[0].isMale) {
-            $scope.GenderOption.checked = $scope.Studentobj[0].isMale
-            $('input:radio[name=sex]')[0].checked = $scope.Studentobj[0].isMale;
+                if ($scope.Studentobj[0].isMale) {
+                    $('input:radio[name=sex]')[0].checked = true;
+                    $('input:radio[name=sex]')[1].checked = false;
+                }
+                if ($scope.Studentobj[0].isMale == false) {
+                    $('input:radio[name=sex]')[1].checked = true;
+                    $('input:radio[name=sex]')[0].checked = false;
+                }
+                console.log(Stddate);
+            }
+            else {
+                alert("you do not have the permission to edit")
+                console.log($scope.retrivedobj);
+                $window.location.href = "#/login";
+
+            }
         }
         else {
-            $scope.GenderOption = $scope.Studentobj[0].isMale
-        }
+            alert("user not logged in");
+            $window.location.href = "#/login";
 
+        }
 
     }).catch(function (reject) {
 

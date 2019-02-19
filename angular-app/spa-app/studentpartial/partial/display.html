@@ -24,6 +24,7 @@
                     <td ng-if="i.isMale == false">Female</td>
                     <td>{{i.date|date:"short"}}</td>
                     <td><a href="#/edit/{{i.id}}" class="btn btn-primary" >Edit</a></td>
+                    
                     <td><button class="btn btn-danger"  ng-click="deletedata(i.id)">Delete</button></td>
                 </tr>
             </tbody>
