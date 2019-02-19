@@ -53,6 +53,32 @@ app.factory('StudentService', ['$http', '$q', '$window', function ($http, $q, $w
             $window.location.href = "#/login";
         }
     }
+    serviceobj.Delete = (id) => {
+        return $q(function (resolve, reject) {
+            let con = confirm("confirm delete ?")
+            if (con) {
+                $http({
+                    method: "DELETE",
+                    url: "http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/" + id
+                }).then(function (response) {
+                    
+                    if (response.status == 200) {
+                        resolve("record deleted")
+                        $window.location.reload();
+                    }
+                    else {
+                        reject("Some problem occured")
+                    }
+                }).catch(function (err) {
+                    reject("Some problem occured")
+
+                })
+            }
+            else {
+
+            }
+        })
+    }
 
     serviceobj.getEmployeeList = function () {
         return $q(function (resolve, reject) {
@@ -99,9 +125,6 @@ app.controller('StudentFormController', ['$scope', '$filter', 'StudentService', 
     $scope.StudentDetailList;
     $scope.hidden = true;
 
-
-    //$scope.showStudentDetails = function () {
-
     StudentService.getEmployeeList().then(function (response) {
         $scope.StudentDetailList = response;
         console.log($scope.StudentDetailList);
@@ -111,7 +134,7 @@ app.controller('StudentFormController', ['$scope', '$filter', 'StudentService', 
 
         alert(reject);
     })
-    //}
+  
     $scope.addStudentDetails = function () {
         let Studentdate = $filter('date')($scope.inputDate, 'dd-MMM-yy');
         let studentobj = {
@@ -131,6 +154,13 @@ app.controller('StudentDisplayController', ['$scope', '$filter', 'StudentService
     $scope.StudentDetailList;
     $scope.hidden = true;
 
+    $scope.deletedata = (id) => {
+        
+        StudentService.Delete(id).then(function (response) {
+            alert(response);
+        });
+    }
+
     StudentService.getEmployeeList().then(function (response) {
         $scope.StudentDetailList = response;
         console.log($scope.StudentDetailList);
@@ -142,8 +172,10 @@ app.controller('StudentDisplayController', ['$scope', '$filter', 'StudentService
     })
 
 }])
-app.controller('StudentLoginController', ['$rootScope','$scope', '$filter', 'StudentService', function ($rootScope,$scope, $filter, StudentService) {
-
+app.controller('StudentLoginController', ['$rootScope', '$scope', '$filter', '$routeParams', 'StudentService', function ($rootScope, $scope, $filter, $routeParams, StudentService) {
+    $scope.Studentobj;
+    $scope.uiddata = $routeParams.UID;
+    let Studentdate = $filter('date')($scope.inputDate, 'dd-MMM-yy');
     $scope.logininput = () => {
         $scope.loginemail = $scope.LoginEmail;
         $scope.loginpass = $scope.LoginPassword;
@@ -165,7 +197,7 @@ app.controller('StudentEditController', ['$scope', '$filter', '$routeParams', 'S
 
     StudentService.getStudentById($scope.uiddata).then(function (response) {
         $scope.Studentobj = response;
-       
+
         $scope.inputRollNo = $scope.Studentobj[0].rollNo;
         $scope.inputName = $scope.Studentobj[0].name;
         $scope.inputAge = $scope.Studentobj[0].age;
