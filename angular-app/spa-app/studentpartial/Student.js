@@ -1,4 +1,7 @@
 var app = angular.module('SwabhavTechlabs', ['ngRoute']);
+app.constant('website', {
+    url:"http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/"
+});
 app.config(
     function ($routeProvider) {
         $routeProvider.when('/', {
@@ -19,14 +22,26 @@ app.config(
         })
     }
 )
-app.factory('StudentService', ['$http', '$q', '$window', function ($http, $q, $window) {
+app.factory('StudentService', ['$rootScope','$http', '$q', '$window','website', function ($rootScope,$http, $q, $window,website) {
     var serviceobj = {};
+    var userDetails={};
+    
+    userDetails=JSON.parse($window.sessionStorage.getItem("obj"));
+    console.log(userDetails)
+    if(userDetails!=null){
+        $rootScope.name=userDetails.email;
+        console.log($rootScope.name)
+       
+    }
+    else{
+        console.log("in else")
+    }
 
     serviceobj.getStudentById = function (stdid) {
         return $q(function (resolve, reject) {
             $http({
                 method: "GET",
-                url: "http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/" + stdid
+                url: website.url + stdid
             }).then(function (response) {
                 if (response.status == 200) {
                     resolve(response.data);
@@ -42,11 +57,12 @@ app.factory('StudentService', ['$http', '$q', '$window', function ($http, $q, $w
     serviceobj.getStatusofUser = (user, pass) => {
         if (user == "abc@gmail.com" && pass == "abc@123") {
             $window.location.href = "#/display";
-            return true
+            return true;
         }
         else if (user == "admin@gmail.com" && pass == "admin") {
+            $rootScope.name=user;
             $window.location.href = "#/display";
-            return true
+            return true;
         }
         else {
             alert("username or password invalid")
@@ -59,7 +75,7 @@ app.factory('StudentService', ['$http', '$q', '$window', function ($http, $q, $w
             if (con) {
                 $http({
                     method: "DELETE",
-                    url: "http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/" + id
+                    url: website.url + id
                 }).then(function (response) {
 
                     if (response.status == 200) {
@@ -80,11 +96,11 @@ app.factory('StudentService', ['$http', '$q', '$window', function ($http, $q, $w
         })
     }
 
-    serviceobj.getEmployeeList = function () {
+    serviceobj.getStudentList = function () {
         return $q(function (resolve, reject) {
             $http({
                 method: "GET",
-                url: "http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/"
+                url: website.url
             }).then(function (response) {
                 if (response.status == 200) {
                     resolve(response.data);
@@ -100,7 +116,7 @@ app.factory('StudentService', ['$http', '$q', '$window', function ($http, $q, $w
 
     serviceobj.addNewStudent = function (Studentobj) {
         if (validator(Studentobj)) {
-            $http.post('http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/', Studentobj).then(function (response) {
+            $http.post(website.url, Studentobj).then(function (response) {
                 $window.location.href = "#/display";
             }, function (reject) {
                 alert("Problem Occured");
@@ -110,13 +126,13 @@ app.factory('StudentService', ['$http', '$q', '$window', function ($http, $q, $w
         }
 
     }
-    serviceobj.updateStudentById=(updatedobj,id)=>{
+    serviceobj.updateStudentById = (updatedobj, id) => {
         console.log("service called")
         console.log(updatedobj)
         console.log(id)
-        $http.put('http://gsmktg.azurewebsites.net/api/v1/techlabs/test/students/'+id, updatedobj).then(function(response){
+        $http.put(website.url + id, updatedobj).then(function (response) {
             $window.location.href = "#/display";
-        },function(reject){
+        }, function (reject) {
             alert("Problem occured")
         })
     }
@@ -136,11 +152,11 @@ app.factory('StudentService', ['$http', '$q', '$window', function ($http, $q, $w
     return serviceobj;
 }])
 
-app.controller('StudentFormController', ['$scope', '$filter', 'StudentService', function ($scope, $filter, StudentService) {
+app.controller('StudentFormController', ['website','$scope', '$filter', 'StudentService', function (website,$scope, $filter, StudentService) {
     $scope.StudentDetailList;
     $scope.hidden = true;
 
-    StudentService.getEmployeeList().then(function (response) {
+    StudentService.getStudentList().then(function (response) {
         $scope.StudentDetailList = response;
         console.log($scope.StudentDetailList);
 
@@ -165,11 +181,65 @@ app.controller('StudentFormController', ['$scope', '$filter', 'StudentService', 
     }
 }])
 
-app.controller('StudentDisplayController', ['$window', '$scope', '$filter', '$rootScope', 'StudentService', function ($window, $scope, $filter, $rootScope, StudentService) {
+app.controller('StudentDisplayController', ['website','$window', '$scope', '$filter', '$rootScope', 'StudentService', function (website,$window, $scope, $filter, $rootScope, StudentService) {
     $scope.StudentDetailList;
+    $scope.islogin=false;
+    $scope.Studentobj;
     $scope.hidden = true;
     $scope.retrivedobj = JSON.parse($window.sessionStorage.getItem("obj"));
     console.log($scope.retrivedobj)
+
+    $scope.logout=()=>{
+        $window.sessionStorage.clear();
+        $window.location.reload();
+    }
+
+    if ($scope.retrivedobj != null) {
+        if ($scope.retrivedobj.isLoggedIn) {
+            console.log($scope.retrivedobj)
+           //$scope.retrivedobj.isLoggedIn=false;
+           sessionStorage.setItem('obj',JSON.stringify($scope.retrivedobj));
+
+           $scope.islogin=true;
+
+        }
+        else {
+            alert("you do not have the permission to delete")
+            console.log($scope.retrivedobj)
+            $window.location.href = "#/login";
+
+        }
+    }
+    else {
+        // alert("user not logged in");
+         $window.location.href = "#/display";
+
+
+    }
+
+    $scope.editdata = (id) => {
+        console.log(website.url);
+        console.log("edit clicked");
+        if ($scope.retrivedobj != null) {
+            if ($scope.retrivedobj.isLoggedIn) {
+
+               $window.location.href="#/edit/"+id;
+            }
+            else {
+                alert("you do not have the permission to delete")
+                console.log($scope.retrivedobj)
+                $window.location.href = "#/login";
+
+            }
+        }
+        else {
+            alert("user not logged in");
+            $window.location.href = "#/login";
+
+
+        }
+        
+    }
 
     $scope.deletedata = (id) => {
         if ($scope.retrivedobj != null) {
@@ -194,7 +264,7 @@ app.controller('StudentDisplayController', ['$window', '$scope', '$filter', '$ro
         }
     }
 
-    StudentService.getEmployeeList().then(function (response) {
+    StudentService.getStudentList().then(function (response) {
         $scope.StudentDetailList = response;
         console.log($scope.StudentDetailList);
 
@@ -205,7 +275,7 @@ app.controller('StudentDisplayController', ['$window', '$scope', '$filter', '$ro
     })
 
 }])
-app.controller('StudentLoginController', ['$rootScope', '$scope', '$window', 'StudentService', function ($rootScope, $scope, $window, StudentService) {
+app.controller('StudentLoginController', ['website','$rootScope', '$scope', '$window', 'StudentService', function (website,$rootScope, $scope, $window, StudentService) {
     $scope.loginemail;
     $scope.loginpass;
 
@@ -236,10 +306,9 @@ app.controller('StudentLoginController', ['$rootScope', '$scope', '$window', 'St
 
     }
 }])
-app.controller('StudentEditController', ['$scope', '$window', '$filter', '$routeParams', 'StudentService', function ($scope, $window, $filter, $routeParams, StudentService) {
+app.controller('StudentEditController', ['website','$scope', '$window', '$filter', '$routeParams', 'StudentService', function (website,$scope, $window, $filter, $routeParams, StudentService) {
     $scope.Studentobj;
     $scope.uiddata = $routeParams.UID;
-
     $scope.retrivedobj = JSON.parse($window.sessionStorage.getItem("obj"));
     console.log($scope.retrivedobj)
 
@@ -255,10 +324,9 @@ app.controller('StudentEditController', ['$scope', '$window', '$filter', '$route
             isMale: $scope.GenderOption
         }
         console.log(studentobj);
-        StudentService.updateStudentById(studentobj,$scope.uiddata)
+        StudentService.updateStudentById(studentobj, $scope.uiddata)
     }
 
-   
 
     StudentService.getStudentById($scope.uiddata).then(function (response) {
         console.log("edit clicked")
@@ -303,3 +371,17 @@ app.controller('StudentEditController', ['$scope', '$window', '$filter', '$route
     })
 
 }])
+app.directive("header",function(){
+    return {
+        templateUrl:"Directives/header.html"
+    }
+        
+    
+})
+app.directive("footer",function(){
+    return {
+        templateUrl:"Directives/footer.html"
+    }
+        
+    
+})

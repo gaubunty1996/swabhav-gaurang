@@ -1,0 +1,63 @@
+<section>
+    {{uiddata}}
+        <div class="jumbotron">
+            <h2 style="text-align: center">
+                STUDENT FORM
+            </h2>
+        </div>
+        <form class="form-horizontal" name="studentform">
+            <div class="form-group">
+                <label for="inputRollNo" class="col-sm-2 control-label">Enter Roll No</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" ng-model="inputRollNo" placeholder="Enter Roll No" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputName" class="col-sm-2 control-label">Enter Name</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" ng-model="inputName" placeholder="Enter Name" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputAge" class="col-sm-2 control-label">Enter Age</label>
+                <div class="col-sm-10">
+                <input type="number" class="form-control" ng-model="inputAge" placeholder="Enter Age" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail" class="col-sm-2 control-label">Enter Email Id</label>
+                <div class="col-sm-10">
+                <input type="email" class="form-control" ng-model="inputEmail" placeholder="Enter Email Id" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputDate" class="col-sm-2 control-label">Enter Date</label>
+                <div class="col-sm-10">
+                <input type="date" class="form-control" ng-model="inputDate" placeholder="Enter Date" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="radio" style="margin-left: 210px" name="sex" ng-model="GenderOption"  value="true" >
+                    MALE
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="radio" style="margin-left: 210px"  name="sex" ng-model="GenderOption"  value="false">
+                    FEMALE
+                </label>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    
+                        <button class="btn btn-primary" ng-click='updateDetailsOfStudent()' ng-disabled="studentform.$invalid">Update</button>
+                   
+                      
+                </div>
+            </div>
+            
+        </form>
+        
+   
+</section>
