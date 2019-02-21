@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+</head>
+<body>
+    <script>
+    let dataservice=function(){
+        let service={}
+        service.cubeOfEven=function(number){
+            return new Promise(function(resolve,reject){
+                if(number%2==0){
+                    resolve(number*number*number);
+                }
+                else{
+                    reject("Mission Failed")
+                }
+            })
+        }
+        return service;
+    }();
+    dataservice.cubeOfEven(6).then((r)=>{
+        console.log(r);
+        dataservice.cubeOfEven(12).then((r)=>{
+        console.log(r);
+        dataservice.cubeOfEven(16).then((r)=>{
+        console.log(r);
+    })
+    })
+    }).catch((r)=>{
+        console.log(r)
+    });
+    
+    console.log("end of script");
+    </script>
+</body>
+</html>

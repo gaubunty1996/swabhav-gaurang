@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="Random">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <script src="angular.js"></script>
+</head>
+<body>
+    <section ng-controller="randController">
+        <input type="button" ng-click="generate($event)" value="generateNumber">
+        <h1 >
+            Random Number Genereated is : {{result}}
+        </h1>
+        <h1 >
+                Random Number Genereated is : {{result2}}
+            </h1>
+    </section>
+    <script>
+        angular.module('Random',[]).controller('randController',['$rootScope','$scope',function($rootScope,$scope){
+            $rootScope.generate=(event)=>{
+                console.log("hello")
+                $scope.result=Math.floor(Math.random()*10);
+                $scope.result2=Math.floor(Math.random()*10);
+            }
+        }])
+    </script>
+    
+</body>
+</html>

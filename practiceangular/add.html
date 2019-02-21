@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="Add">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+    <script src="angular.js"></script>
+</head>
+<body>
+    <section ng-controller="Addcontoller">
+        <Label>
+            Values:
+        </Label><br>
+        <input type="number" ng-model="firstNumber">
+        <input type="number" ng-model="SecondNumber" ng-keypress="sum($event)">
+        <input type="button" ng-click="SUM($event)" value="AddButton">
+        <h4>
+            {{firstNumber}}  * {{SecondNumber}}  ={{result}}
+        </h4>
+        <h4>
+                {{firstNumber}}  * {{SecondNumber}}  ={{result2}}
+            </h4>
+
+    </section>
+    <script>
+        angular.module('Add',[]).
+        controller('Addcontoller',['$rootScope','$scope',function($rootScope,$scope){
+            $rootScope.SUM=(event)=>{
+                console.log("hello")
+                $scope.result=$scope.firstNumber*$scope.SecondNumber;
+            }
+            $rootScope.sum=(event)=>{
+                console.log("hello")
+                $scope.result2=$scope.firstNumber*$scope.SecondNumber;
+            }
+        }])
+    </script>
+</body>
+</html>

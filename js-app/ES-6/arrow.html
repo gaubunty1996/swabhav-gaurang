@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+</head>
+<body>
+    <script>
+    let processData = function(number,cb){
+        let randomNumber = Math.random()*number;
+        if(randomNumber>5){
+            cb(5*5);
+        }
+        else{
+            cb(randomNumber);
+        }
+    }
+    // processData(6,function(randomNumber){
+    //     console.log(randomNumber);
+    // })
+    processData(10,(randomNumber)=>{
+        console.log(randomNumber);
+    }
+    )
+    
+    setTimeout(function(){
+        console.log("inside setTimeOut for 1st time")
+    },3000)
+
+    setTimeout(()=>{
+        console.log("inside setTimeOut for 2nd time")
+    },4000)
+
+    </script>
+    
+    <script>
+        function Employee(name){
+            let newName;
+            this.newName=name;
+            
+            this.display1=function(){
+                setTimeout(function(){
+                    console.log(this.newName+"hello")
+                },3000)
+            }
+            this.display2 =function(){
+               setTimeout(()=>{
+                console.log(this.newName)
+               },2000)
+            }
+        }
+        let emp = new Employee("Gaurang");
+        emp.display1();
+        emp.display2();
+        let emp2 = new Employee("Ajay");
+        emp2.display1();
+        emp2.display2();
+        console.log(emp)
+        console.log(emp2)
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="Mood">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="angular.js"></script>
+</head>
+
+<body>
+    <section ng-controller="MoodGenerator">
+        <input type="button" ng-click="generate($event)" value="Generate">
+        <h1>
+            {{mood}}
+        </h1>
+    </section>
+    <script>
+        angular.module('Mood', []).controller('MoodGenerator', ['$rootScope', '$scope', function ($rootScope, $scope) {
+            $scope.moodList = ['Happy', 'Sad', 'Ill', 'Healthy', 'Disowned'];
+            $scope.generate = (event) => {
+
+                $scope.randNumber = Math.floor(Math.random() * 4);
+                $scope.mood = $scope.moodList[$scope.randNumber];
+            }
+        }])
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="promise">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="angular.js"></script>
+</head>
+
+<body>
+    <section ng-controller='promiseController'>
+        <input type="number" >
+        {{result}}
+
+    </section>
+    <script>
+        angular.module('promise', [])
+       
+            .factory("mathService", function ($log, $rootScope) {
+                $log.info("Service created");
+                var obj = {};
+                obj.even = (num) => {
+                    if (num % 2 == 0) {
+                        return "Green";
+                    }
+                    return "Red";
+                }
+                obj.odd = (num) => {
+                    if (num % 2 == 0) {
+                        return "Green";
+                    }
+                    return "Red";
+                }
+                return obj;
+            })
+            .controller('promiseController',($rootScope,$scope,mathService)=>{
+                console.log("hello")
+                $scope.result=1;
+            })
+    </script>
+</body>
+
+</html>

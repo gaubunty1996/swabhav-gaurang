@@ -1,0 +1,14 @@
+{
+  "name": "testpackage",
+  "version": "1.0.0",
+  "description": "just testing purpose",
+  "main": "Hello.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "gaurang",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.24.0"
+  }
+}

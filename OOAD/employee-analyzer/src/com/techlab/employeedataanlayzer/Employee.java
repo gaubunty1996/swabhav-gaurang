@@ -1,5 +1,6 @@
 package com.techlab.employeedataanlayzer;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Employee implements Comparable<Employee> {
@@ -11,6 +12,12 @@ public class Employee implements Comparable<Employee> {
 	private String dateOfJoining;
 	private int departmentNumber;
 	private int salary;
+	private ArrayList<Employee> reporteeList;
+	
+	public Employee() {
+		super();
+		reporteeList = new ArrayList<>();
+	}
 
 	public String getName() {
 		return name;
@@ -81,5 +88,24 @@ public class Employee implements Comparable<Employee> {
 		return this.empId - o.empId;
 
 	}
+	public ArrayList<Employee> getReporteeList() {
+		return reporteeList;
+	}
+	
+	public StringBuilder getReportee(){
+		StringBuilder data=new StringBuilder();
+		for(Employee employee:getReporteeList()) {
+			data.append(employee.getDesignation()+" "+employee.getName()+"|");
+		}
+		return data;
+	}
+
+	public void setReporteeList(ArrayList<Employee> reporteeList) {
+		this.reporteeList = reporteeList;
+	}
+
+	public void addReportee(Employee employee) {
+		reporteeList.add(employee);
+}
 
 }

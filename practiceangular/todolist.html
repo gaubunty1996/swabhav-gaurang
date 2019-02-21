@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="Task">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <script src="angular.js"></script>
+</head>
+<body>
+    <section ng-controller="AddController">
+        <Label>
+            Enter a Task
+        </Label>
+        <input type="text" ng-model="textvalue" ng-keypress="AddTask($event)" placeholder="Add Something">
+        <h1>
+            {{textvalue}}
+        </h1>
+        <ol>
+            <li ng-repeat="task in listoftasks">
+               {{task}} 
+            </li>
+        </ol>
+
+    </section>
+    <script>
+        angular.module('Task',[]).
+        controller('AddController',['$rootScope','$scope',function($rootScope,$scope){
+            $rootScope.listoftasks=[];
+            $rootScope.AddTask=(event)=>{
+               if(event.keyCode==13){
+                   console.log($scope.textvalue)
+                   $rootScope.listoftasks.push($scope.textvalue)
+                   $scope.textvalue="";
+               }
+            }
+        }])
+    </script>
+</body>
+</html>

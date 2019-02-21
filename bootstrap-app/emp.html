@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Custom Service</title>
+    <script src="angular.js"></script>
+</head>
+<body ng-app="customService"> 
+    <div ng-controller="evenControl">
+        <p>Cube Even</p>
+        <input type="number" ng-model="evenNum" ng-change="evenNum">
+        <input type="button" value="ok" ng-click="showEven()">
+        {{result}}
+    </div><br><hr>
+    <div ng-controller="oddControl">
+            <p>Cube Odd</p>
+            <input type="number" ng-model="oddNum" >
+            <input type="button" value="ok" ng-click="showOdd()"><br>
+            {{result}}
+    </div>
+
+    <script>
+        angular.module("customService",[])
+               .factory("mathService",function($log, $rootScope){
+                   $log.info("Service created");
+                   var obj={};
+                   obj.even=(num)=>{
+                       if(num%2==0){
+                            return "Cube of even Number is "+num*num*num;
+                        }
+                            return num+ "is not  Even Number";
+                        }
+                   obj.odd=(num)=>{
+                        if(num%2!=0){   
+                            return "Cube of odd number is "+num*num*num;
+                        }
+                            return num+" is not Odd Number"
+                        }
+                   return obj;
+               })
+               .controller("evenControl",($rootScope, $scope, mathService)=>{
+                   $rootScope.showEven=()=>{
+                        $scope.result=mathService.even($scope.evenNum);
+                   }
+               })
+               .controller("oddControl",($rootScope, $scope, mathService)=>{
+                    $rootScope.showOdd=()=>{
+                        $scope.result=mathService.odd($scope.oddNum);
+                   }
+               })
+    </script>
+</body>
+</html>
+
+
+use $http to hit the number api
