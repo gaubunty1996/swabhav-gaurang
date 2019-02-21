@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>hierarchy Display</title>
-    <script src="angular.js"></script>
     <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="angular.js"></script>
+    
 </head>
 
 <body>
@@ -145,20 +146,20 @@
                 $scope.Empdata = [];
                 console.log(empList);
                 $scope.Empdata = empList;
-                 
-              //  $scope.randomId =;
+
+                //  $scope.randomId =;
 
                 /*   var date = new Date();
                    var mm = date.getMilliseconds();
                    var sss = date.getMinutes();
                    $scope.randomId = mm + "" + sss;*/
-                  // $scope.randomId=$scope.generatorEmpId();
+                // $scope.randomId=$scope.generatorEmpId();
 
 
                 $scope.empManagerId = [7698, 7782, 7566, 7839];
                 $scope.empDesignation = ["CLERK", "SALESMAN", "MANAGER", "ANALYST", "PRESIDENT"];
                 $scope.empDepartment_num = [10, 20, 30];
-                
+
 
                 $scope.tableToggle = true;
                 $scope.showData = function () {
@@ -196,7 +197,7 @@
 
                 $scope.clearTextData = function () {
                     $scope.randomId = $scope.generatorEmpId();
-                    $scope.randomId="";
+                    $scope.randomId = "";
                     $scope.Name = "";
                     $scope.selectedDesignation = "";
                     $scope.selectedManagerId = "";

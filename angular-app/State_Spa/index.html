@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html ng-app="state">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="angular.js"></script>
+    <script src="angular-ui-router.js"></script>
+    <script src="app.js"></script>
+    <script src="controller.js"></script>
+
+
+</head>
+<body>
+    <a ui-sref="home">Home</a>
+    <a ui-sref="about">About</a>
+    <a ui-sref="careers">Careers</a>
+    <br><br><br>
+    <article ui-view>
+
+    </article>
+</body>
+</html>
