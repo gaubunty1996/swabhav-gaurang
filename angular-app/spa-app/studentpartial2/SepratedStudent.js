@@ -163,3 +163,31 @@ app.directive("footer",function(){
         
     
 })
+app.controller('StudentFormController', ['website','$scope', '$filter', 'StudentService', function (website,$scope, $filter, StudentService) {
+    $scope.StudentDetailList;
+    $scope.hidden = true;
+
+    StudentService.getStudentList().then(function (response) {
+        $scope.StudentDetailList = response;
+        console.log($scope.StudentDetailList);
+
+        $scope.hidden = false;
+    }).catch(function (reject) {
+
+        alert(reject);
+    })
+
+    $scope.addStudentDetails = function () {
+        let Studentdate = $filter('date')($scope.inputDate, 'dd-MMM-yy');
+        let studentobj = {
+            rollNo: $scope.inputRollNo,
+            name: $scope.inputName,
+            age: $scope.inputAge,
+            email: $scope.inputEmail,
+            date: Studentdate,
+            isMale: $scope.GenderOption
+        }
+        console.log(studentobj);
+        StudentService.addNewStudent(studentobj);
+    }
+}])

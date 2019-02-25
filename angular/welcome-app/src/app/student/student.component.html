@@ -1,0 +1,41 @@
+<h1>Binding expression</h1>
+<h1>
+  <div>
+    {{student['studentName']}}
+    <br>
+    {{student['company']}}
+    <br>
+    {{student['Job']}}
+    <br>
+    <h1 [style.background-color]=getCgpaColor>
+      {{student['cgpa']}}
+    </h1>
+    
+    <br>
+  
+  </div>
+</h1>
+<hr>
+<h1>
+  using json filter
+</h1>
+<h1>
+  <div>
+    {{student|json}}
+    
+    <br>
+  </div>
+</h1>
+<p [innerHtml]='message'>
+
+</p>
+<p [innerHtml]="'message'">
+
+</p>
+<img [src]="imgsrc" [alt]="" [width]='imgWidth' [height]='imgHeight'><br><br>
+<input type="button" value="Load" (click)='buttonEvent()' name="" id=""><br><br>
+<ul>
+  <li *ngFor="let item of arraylist">
+    {{item}}
+  </li>
+</ul>
