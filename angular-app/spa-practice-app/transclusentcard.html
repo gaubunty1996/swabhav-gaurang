@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="mainApp">
+
+<head>
+    <title>Angular JS Custom Directives</title>
+    <script src="angular.js"></script>
+</head>
+
+<body>
+    <!-- <h2> Visiting Card Application</h2> -->
+    <div ng-controller="visitingCardController">
+        <visiting-card ng-repeat="index in data ">
+           <div><h3> Welcome To Visiting Card App</h3></div>
+          
+        </visiting-card>
+    </div>
+
+    <script>
+        angular.module("mainApp", [])
+            .directive('visitingCard', function () {
+                return {
+                    restrict:'E',
+                    replaced:true,
+                    transclude:true,
+                    template: "</div><div ng-transclude></div><div>Name: <b>{{index.name}}</b> </br> Address: <b>{{index.address}}  </br> Mobile No :{{index.mobileNum}}</br></br>"
+                        
+                }
+            })
+            .controller('visitingCardController', function ($scope) {
+                $scope.data = [{ name: "Gaurang", address: "Highland", mobileNum: 9821307214 }, { name: "vinod", address: "lalbaugh", mobileNum:123456789 }, { name: "ajay", address: "Mira Road", mobileNum: 987654321 }];
+            })
+    </script>
+
+</body>
+
+</html>

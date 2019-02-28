@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html ng-app="testCustom">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <script src="angular.js"></script>
+
+</head>
+<body>
+    <div ng-controller="visitingCardController">
+            <visiting-card ng-repeat="i in data "></visiting-card>
+    </div>
+    <script>
+        var app = angular.module('testCustom',[])
+        app.directive('visitingCard',function(){
+            return {
+                    template: "Name: <b>{{i.name}}</b> </br> Address: <b>{{i.address}}  </br> Mobile No :{{i.mobileNum}}</br></br>"
+                }
+        })
+        app.controller('visitingCardController', function ($scope) {
+                $scope.data = [{ name: "Gaurang", address: "Highland", mobileNum: 9821307214 }, { name: "vinod", address: "lalbaugh", mobileNum:123456789 }, { name: "ajay", address: "Mira Road", mobileNum: 987654321 }];
+            })
+    </script>
+</body>
+</html>
