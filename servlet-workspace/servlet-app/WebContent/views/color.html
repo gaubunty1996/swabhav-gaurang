@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body bgcolor="<%= cookie.getValue() %>">
+	<H2 ALIGN="CENTER">Color Testing</H2>
+	
+	<form action="http://localhost:8080/servlet-app/cookie" method='POST'>
+		<input type="text" name="colour" size="25">
+		<p></p>
+		<input type="submit" value="Submit"> 
+		<input type="reset"	value="Reset">
+	</form>
+</body>
+</html>

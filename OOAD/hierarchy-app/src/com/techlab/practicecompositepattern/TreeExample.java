@@ -1,6 +1,13 @@
 package com.techlab.practicecompositepattern;
 
-import javax.swing.*;  
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+import javax.swing.JFrame;
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultMutableTreeNode;  
 public class TreeExample {  
 JFrame f;  

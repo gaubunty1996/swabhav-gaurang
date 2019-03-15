@@ -24,6 +24,14 @@ public class EmployeeHeirarchyBuilder {
 		return rootEmployee;
 	}
 
+	public Map<Integer, Employee> getEmpMap() {
+		return empMap;
+	}
+
+	public void setEmpMap(Map<Integer, Employee> empMap) {
+		this.empMap = empMap;
+	}
+
 	public void getHeirachy() {
 		for (Map.Entry<Integer, Employee> entry : empMap.entrySet()) {
 			if (empMap.containsKey(entry.getValue().getMangerId())) {
